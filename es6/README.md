@@ -725,16 +725,16 @@
                     }
                 }
 
-## 数组方法
+## 数组方法（常用）
 
-1.  Array.of() 方法创建数组
+1.  Array.of( ) 方法创建数组
 
         let items = Array.of(1, 2);
         console.log(items.length); // 2
         console.log(items[0]); // 1
         console.log(items[1]); // 2
 
-2. Array.from()
+2. Array.from( )
 
     > 参数1: 可迭代对象或者类数组对象(伪数组)
 
@@ -766,13 +766,25 @@
         let numbers = translate(1, 2, 3);
         console.log(numbers); // 2,3,4
 
-3. find()和findIndex()
+3. find( )和findIndex( )
 
        find() 方法会返回匹配的值
        findIndex() 方法则会返回匹配位置的索引
        let numbers = [25, 30, 35, 40, 45];
        console.log(numbers.find(n => n > 33)); // 35
        console.log(numbers.findIndex(n => n > 33)); // 2
+
+4. includes( ) ***ES7中规范***
+    >  用于检查某个子字符串是否存在于指定字符串中
+        参数1 : 需要搜索的值
+        参数2 : 可选的搜索起始位置索引
+        若在数组中找到了该值，返回 true ；否则返回 false
+
+        let values = [1, 2, 3];
+        console.log(values.includes(1)); // true
+        console.log(values.includes(0)); // false
+        // 从索引 2 开始搜索
+        console.log(values.includes(1, 2)); // false
 
 ## Promise
 
@@ -799,6 +811,64 @@
 
 ## 模块化封装代码
 
+   > Tips:
+        1. 模块代码自动运行在严格模式下，并且没有任何办法跳出严格模式；
+        2. 在模块的顶级作用域创建的变量，不会被自动添加到共享的全局作用域，它们只会在模
+        块顶级作用域的内部存在；
+        3. 模块顶级作用域的 this 值为 undefined ；
+        4. 模块不允许在代码中使用 HTML 风格的注释（这是 JS 来自于早期浏览器的历史遗留特
+        性）；
+        5. 对于需要让模块外部代码访问的内容，模块必须导出它们；
+        6. 允许模块从其他模块导入绑定。
+
+   * 导出export
+
+            每个被导出的函数或类都有名称(除非使用了 default 关键字)
+            函数在模块外部不可访问，因为任意没有被显式导出的变量、函数或类都会在模块内保持私有
+
+   * 导入import
+        > 一是需要导入的标识符，二是需导入的标识符的来源模块
+
+        > 无论你对同一个模块使用了多少次 import 语句，该模块都只会被执行一次
+
+            * 导入单个绑定
+            import { sum } from "./example.js";
+            * 导入多个绑定
+            import { sum, multiply, magicNumber } from "./example.js";
+            * 完全导入一个模块(命名空间导入)
+            import * as example from "./example.js";
+
+   * 重命名导出与导入
+
+            export { sum as add };
+            import { add } from "./example.js
+
+   * 模块的默认值
+
+            Condition 1
+                export default function(num1, num2) {
+                    return num1 + num2;
+                }
+
+            Condition 2
+                function sum(num1, num2) {
+                    return num1 + num2;
+                }
+                export default sum;
+
+            Condition 3
+                重命名语法
+                function sum(num1, num2) {
+                    return num1 + num2;
+                }
+                export { sum as default };
+
+
+
+## 学习锦囊
+
+    * https://leohxj.gitbooks.io/front-end-database/content/html-and-css-basic/common-tag.html
+    * https://lq782655835.github.io/blogs/team-standard/1.standard-ai-vue.html
 
 
 
