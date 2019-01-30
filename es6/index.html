@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>深入理解ES6</title>
+  <title>2019 Study Schedule</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -10,23 +10,18 @@
 </head>
 <body>
   <nav>
-    <a href="./深入理解ES6翻译完整版.pdf">深入理解ES6翻译完整版.pdf</a>
+    <a href="note/深入理解ES6翻译完整版.pdf">深入理解ES6翻译完整版.pdf</a>
+    <!--<a href="#/note/project-note.md">ReactJS 学习之路</a>-->
   </nav>
   <div id="app"></div>
   <script>
     window.$docsify = {
       name: '',
       repo: '',
-      coverpage: 'coverpage.md',
+      coverpage: 'note/coverpage.md',
       loadNavbar: true,
-      markdown: {
-        smartypants: true,
-        renderer: {
-          link: function () {
-            // ...
-          }
-        }
-      }
+      loadSidebar: true,
+      subMaxLevel: 2
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
