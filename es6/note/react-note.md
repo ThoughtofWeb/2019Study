@@ -84,10 +84,6 @@
 
                 this.setState({comment: 'Hello'});
 
-
-[CodePen代码调试工具](https://codepen.io/gaearon/pen/PGEjdG?editors=0010)
-
-
 ## Get Started
    1. npx create-react-app my-app
    2. cd my-app
@@ -193,3 +189,4 @@
 
   * [react集锦](http://huziketang.mangojuice.top/books/react/lesson2)
   * [JSX语法](https://react.docschina.org/docs/introducing-jsx.html)
+  * [CodePen代码调试工具](https://codepen.io/gaearon/pen/PGEjdG?editors=0010)
