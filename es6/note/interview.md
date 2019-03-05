@@ -73,6 +73,201 @@
 
 15. 后端语言/NodeJs不强求
 
+## 技术栈准备
+
+    jQuery 源码 --> 核心架构
+                   事件委托
+                   插件机制
+                   兼容性（次之）
+           渠道 --> 博客文章
+
+    三大框架准备1-2个
+    Vue     源码（重要）
+            渠道 --> 博客文章（将技术博客常问的问题筛选）
+    React   源码（重要，比较火）
+    Angular
+
+    NodeJs --> unnecessory
+
+    sass     --> 技术博客
+    less     --> 技术博客
+    gulp     --> 技术博客
+    npm      --> 技术博客
+    webpack  --> 技术博客
+
+## 自我介绍
+   1. 简历
+      > 基本信息 : 姓名&年龄&手机&邮箱&籍贯&学历
+
+      > 工作经历 : 时间、公司、岗位、职责、技术栈、业绩（业务收益&技术收益）
+
+   2. 自我陈述
+      * 把握面试的沟通方向
+      * 豁达、自信
+
+              是xxx项目负责人 -- wrong
+              负责xxx项目    -- wrong
+
+          > 回答技巧
+              step1: 平时喜欢研究技术网站
+              step2: 喜欢看其中的原理思考
+              step3: 尝试有没有更好地方式
+
+## 一面/二面 --> 基础知识(理论知识)
+   1. 页面布局
+
+            Demo牛刀小试:  interview/layout.html
+            假设高度已知，实现三栏布局，其中左右两栏各300px,中间自适应，你有几种实现方式？
+
+                > 浮动
+                    兼容性好     脱标
+                > 定位
+                    快速        可使用性差 脱标且子元素全部脱标
+                > flexBox
+                    比较完美
+                > display:table-cell
+                    比较完美    三栏若其中一栏高度撑出，其余两栏会相应变化
+                > grid 网格布局
+                    简洁完美
+
+            布局优缺点？
+
+            假设高度未知？
+                > flexBox
+                > display:table-cell
+
+            TodoList:
+                三栏布局:
+                    左右宽度固定，中间自适应
+                    上下高度固定，中间自适应
+                两栏布局:
+                    左宽度固定，右自适应
+                    右宽度固定，左自适应
+                    上高度固定，下自适应
+                    下高度固定，上自适应
+
+   2. CSS盒模型
+        * 对CSS盒模型的理解？
+        * 基本概念（标准模型和IE模型）
+        * 标准模型和IE模型区别
+
+        ![标准模型](standard.png)
+        ![IE模型](IE.png)
+
+        * CSS如何设置两种模型？
+        ```
+            box-sizing:content-box; 标准模型
+            box-sizing:border-box;  IE模型
+        ```
+        * JS如何获取对应盒模型的宽高
+        ```
+            dom.style.width/height (仅限内联样式即行内样式)
+            dom.currentStyle.width/height (获取渲染以后的宽高，但是仅支持IE)
+            window.getComputedStyle(dom).width/height (兼容性更好)
+            dom.getBoundingClientRect.width/height (获取视口绝对位置)
+        ```
+        * 根据盒模型解释边距重叠(父子元素、兄弟元素、空元素)
+                interview/box.html
+        * BFC解决方案
+            BFC基本概念(块级格式化上下文)
+            BFC原理
+                1. 垂直方向会重叠
+                2. BFC区域不会与浮动元素重叠(用于清除浮动)
+                3. 内外元素互不影响
+                4. 计算BFC高度时，浮动元素也会参与计算
+                interview/bfc.html
+            如何创建BFC?
+                1. float属性不为none
+                2. position为absolute或fixed
+                3. display为inline-block, table-cell, table-caption, flex, inline-flex
+                4. overflow不为visible
+            BFC使用场景
+            [BFC的原理简介及其一些应用](http://www.cnblogs.com/lhb25/p/inside-block-formatting-ontext.html)
+
+   3. DOM事件
+        * DOM事件级别
+            1. element.onclick=function(){}
+            2. element.addEventListener('click',function(){},false)
+            3. 扩充 element.addEventListener('keyup',function(){},false)
+        * DOM事件模型
+            捕获、冒泡
+
+        * DOM事件流
+            事件捕获作用到目标对象，该对象冒泡(上传)到window
+        ![事件流](事件流.png)
+
+        * 描述DOM事件捕获的具体流程
+            window -> document -> html -> body -> ··· -> 目标元素
+            interview/event.html
+            反之即冒泡的流程
+        * Event对象的常见应用
+            event.preventDefault()
+            event.stopPropagation()
+            event.stopImmediatePropagation()
+            event.currentTarget()
+            event.target()
+        * 自定义事件
+            ```
+            两者区别在于传参
+            Condition 1 --> Event
+            var eve = new Event('ppc');
+            ev.addEventListener('ppc',function(){
+                console.log('ppc')
+            })
+            ev.dispatchEvent(eve)
+
+            Condition 2 --> CustomEvent
+            // 创建并分发事件
+            var event = new CustomEvent("cat", {"detail":{"hazcheeseburger":true}})
+            // 添加一个适当的事件监听器
+            obj.addEventListener("cat", function(e) { process(e.detail) })
+            obj.dispatchEvent(event)
+            ```
+            [CustomEvent](https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent)
+   4. http协议
+        * http协议的主要特点
+            简单快速(每个资源固定，统一资源符UII)
+            灵活(一个http协议就可以完成不同数据类型的传输)
+            无连接(连接一次会断开)
+            无状态(http协议无法区分连接者的身份，如客户端或服务端)
+        * [ http报文的组成部分](https://www.cnblogs.com/sjm19910902/p/6423181.html)
+            请求报文:
+                请求行(http方法、页面地址、协议、版本)、
+                请求头(由键值对组成,通知服务器有关于客户端请求的信息)、
+                空行(分隔请求头和请求体，通知服务器请求头结束)、
+                请求体(请求数据)
+            响应报文:
+                状态行(协议、版本号、状态码)、
+                响应头(同上)、
+                空行、
+                响应体
+        * http协议的方法
+                GET(获取资源)
+                POST(查询资源)
+                PUT(更新资源)
+                DELETE(删除资源)
+                HEAD(获取报文首部资源)
+           ![GET和POST区别](difference.png)
+        * http协议的主要特点
+   5. 面向对象
+
+   6. 原型链
+
+   7. 通信
+      * 跨域通信
+      * 普通前端通信
+
+   8. 安全
+      * CSRF
+      * XSS (慕课免费视频)
+
+   9. 算法
+
+# 学习锦囊
+   * [Js](https://yuchengkai.cn/docs/frontend/#new)
+   * [display:table-cell布局](https://www.zhangxinxu.com/wordpress/2010/10/%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8Ddisplaytable-cell%E7%9A%84%E5%BA%94%E7%94%A8/)
+   * [知识梳理集锦](https://juejin.im/post/5c64d15d6fb9a049d37f9c20)
+
 
 
 
