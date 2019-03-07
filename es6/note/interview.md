@@ -499,12 +499,52 @@
 
                 问题引申：
                     原理？
-                    如何实现
+                     /**
+                      * [function 在页面中注入js脚本]
+                      */
+                     util.createScript = function (url, charset) {
+                         var script = document.createElement('script');
+                         script.setAttribute('type', 'text/javascript');
+                         charset && script.setAttribute('charset', charset);
+                         script.setAttribute('src', url);
+                         script.async = true;
+                         return script;
+                     };
+                    util.jsonp = function (url, onsuccess, onerror, charset) {
+                         var callbackName = util.getName('tt_player');
+                         window[callbackName] = function () {
+                             if (onsuccess && util.isFunction(onsuccess)) {
+                                 onsuccess(arguments[0]);
+                             }
+                         };
+                         var script = util.createScript(url + '&callback=' + callbackName, charset);
+                         script.onload = script.onreadystatechange = function () {
+                             if (!script.readyState || /loaded|complete/.test(script.readyState)) {
+                                 script.onload = script.onreadystatechange = null;
+                                 // 移除该script的 DOM 对象
+                                 if (script.parentNode) {
+                                     script.parentNode.removeChild(script);
+                                 }
+                                 // 删除函数或变量
+                                 window[callbackName] = null;
+                             }
+                         };
+                         script.onerror = function () {
+                             if (onerror && util.isFunction(onerror)) {
+                                 onerror();
+                             }
+                         };
+                         document.getElementsByTagName('head')[0].appendChild(script);
+                     };
 
-        * Hash(url中#后的hash)
-            (url中?后search的改变会刷新页面，但hash不会)
+                    如何实现？
+
+        * Hash ( url中?后search的改变会刷新页面，但url中#后的hash不会 )
+
         * postMessage(h5新增)
-            产生背景：同源策略限制跨域通信，但是现实业务又需要跨域通信
+
+                产生背景：同源策略限制跨域通信，但是现实业务又需要跨域通信
+
         * WebSocket
         * CORS
             可以理解为支持跨域通信的ajax
