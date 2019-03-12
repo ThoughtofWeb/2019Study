@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flex布局实现上下固定 中间自适应</title>
+    <style type="text/css">
+        html,body{
+            padding:0;
+            margin:0;
+            height:100%; /*定义页面整体高度为100%，重要*/
+
+
+        }
+        .container{
+            display:flex; /*父元素的定义为flex布局*/
+            height:100%; /*这里也要定义，重要*/
+            width:100%;
+            flex-direction: column; /*定义排列方向为竖排*/
+        }
+        .header{
+            height:100px; /*头部固定高度*/
+            background: red;
+            align-items: center;
+            justify-content: center;
+        }
+        .footer{
+            height:100px; /*尾部固定高度*/
+            background: yellow;
+        }
+        .main{
+            background: #ccc;
+            flex:1; /*中间分配剩下的所有空间*/
+            display: flex;
+        }
+        .section-left {
+            width: 200px;
+            background-color: pink;
+        }
+        .section-right {
+            flex:auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">我是头部</div>
+    <div class="main">
+        <div class="section-left">321xxxxxxxxxxxxx</div>
+        <div class="section-right">我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br>
+            我是flex布局实现的中间自适应<br>我是flex布局实现的中间自适应<br></div>
+    </div>
+    <div class="footer">我是尾部</div>
+</div>
+</body>
+</html>

@@ -76,10 +76,10 @@
 ## 技术栈准备
 
     jQuery 源码 --> 核心架构
-                   事件委托
-                   插件机制
+                   事件委托 https://www.cnblogs.com/zhoushengxiu/p/5703095.html
+                   插件机制 jquey.extend/jquery.fn.extend
                    兼容性（次之）
-           渠道 --> 博客文章
+           渠道 --> 博客文章 https://www.cnblogs.com/coco1s/p/5261646.html
 
     三大框架准备1-2个
     Vue     源码（重要）
@@ -118,6 +118,7 @@
 
     Demo牛刀小试:  interview/layout.html
     假设高度已知，实现三栏布局，其中左右两栏各300px,中间自适应，你有几种实现方式？
+    布局优缺点？
 
         > 浮动
             兼容性好     脱标
@@ -130,8 +131,6 @@
         > grid 网格布局
             简洁完美
 
-    布局优缺点？
-
     假设高度未知？
         > flexBox
         > display:table-cell
@@ -139,12 +138,23 @@
     TodoList:
         三栏布局:
             左右宽度固定，中间自适应
-            上下高度固定，中间自适应
+            上下高度固定，中间自适应 interview/layout-2.html
+
         两栏布局:
             左宽度固定，右自适应
             右宽度固定，左自适应
             上高度固定，下自适应
             下高度固定，上自适应
+
+        上下左右垂直居中: https://blog.csdn.net/xufeiayang/article/details/80075040
+            > flexbox
+                align-items: center;
+                justify-content: center;
+                display: flex;
+            > display:table-cell
+            > 定位
+            > 使用参照物如: 增加一个span或者其他元素
+                同级别的vertical-align: middle
 
 ### CSS盒模型
 * 对CSS盒模型的理解？
@@ -370,7 +380,7 @@
               s3.play.push(4);
               console.log(s3.play, s4.play);
 
-              // 优化2 :
+              // 优化2 : 构造函数指向同一个，无法区分constructor是子类的还是父类的，创建中间对象使其分开
               function Parent3 () {
                   this.name = 'parent3';
                   this.play = [1, 2, 3];
@@ -393,6 +403,15 @@
             var M = function(name){this.name=name}
             var o = new M('cxx')
    3. Object.create()
+         > 原理
+            创建一个中间对象，让子类的原型对象指向父类的原型对象(即指向同一个地址)
+            Object.create =  function (o) {
+                var F = function () {};
+                F.prototype = o;
+                return new F();
+            };
+
+         > 使用
             var o = {a:34}
             var o2 = Object.create(o)
             o2 --> {}
@@ -541,19 +560,172 @@
 
         * Hash ( url中?后search的改变会刷新页面，但url中#后的hash不会 )
 
+                  // 利用hash，场景是当前页面 A 通过iframe或frame嵌入了跨域的页面 B
+                  // 在A中伪代码如下：
+                  var B = document.getElementsByTagName('iframe');
+                  B.src = B.src + '#' + 'data';
+                  // 在B中的伪代码如下
+                  window.onhashchange = function () {
+                      var data = window.location.hash;
+                  };
+
         * postMessage(h5新增)
 
                 产生背景：同源策略限制跨域通信，但是现实业务又需要跨域通信
+                // postMessage
+                // 窗口A(http:A.com)向跨域的窗口B(http:B.com)发送信息
+                Bwindow.postMessage('data', 'http://B.com');
+                // 在窗口B中监听
+                Awindow.addEventListener('message', function (event) {
+                    console.log(event.origin);
+                    console.log(event.source);
+                    console.log(event.data);
+                }, false);
 
-        * WebSocket
-        * CORS
-            可以理解为支持跨域通信的ajax
+        * WebSocket(了解即可)
+
+                 var ws = new WebSocket('wss://echo.websocket.org');
+                <!--  发送 -->
+                 ws.onopen = function (evt) {
+                     console.log('Connection open ...');
+                     ws.send('Hello WebSockets!');
+                 };
+                 <!--  接收 -->
+                 ws.onmessage = function (evt) {
+                     console.log('Received Message: ', evt.data);
+                     ws.close();
+                 };
+                 <!-- 结束 -->
+                 ws.onclose = function (evt) {
+                     console.log('Connection closed.');
+                 };
+
+        * CORS(了解即可)
+
+                可以理解为支持跨域通信的ajax
+                // CORS【参考资料】http://www.ruanyifeng.com/blog/2016/04/cors.html
+                // url（必选），options（可选）
+                fetch('/some/url/', {
+                    method: 'get',
+                    ...
+                }).then(function (response) {
+                }).catch(function (err) {
+                  // 出错了，等价于 then 的第二个参数，但这样更好用更直观
 
 ### 安全
   * CSRF
-  * XSS (慕课免费视频)
 
-### 算法
+    1. 基本概念&缩写
+
+        > 跨站请求伪造(不要求知道全称，若需要该公司low)
+
+    2. 攻击原理
+
+            利用网站接口的漏洞，去执行接口
+            条件：用户登录
+                 网站接口有漏洞
+
+        ![攻击原理](攻击原理.png)
+    3. 防御
+        * Token验证(手动绑定Token后，访问网站会自动进行Token验证)
+        * Referer验证(页面来源，服务器判断页面来源是否是某一站点下)
+        * 隐藏令牌(放在http的head中，方式与token类似)
+
+  * XSS (详情参考慕课免费视频www.imooc.com/learn/812)
+        攻击原理：向页面注入脚本，不需要进行登录验证
+        防御：使插入的脚本不可执行
+  * 区别(在于攻击原理)
+
+### 算法(技巧：不会也要体验你是会的)
+* 排序(掌握以下即可)
+
+    [快速排序](http://segmentfault.com/a/1190000009426421)
+
+    [选择排序](https://segmentfault.com/a/1190000009366805)
+
+    [希尔排序](https://segmentfault.com/a/1190000009461832)
+
+    冒泡排序
+
+* [堆栈、队列、链表](https://juejin.im/entry/58759e79128fe1006b48cdfd)
+* [递归](https://segmentfault.com/a/1190000009857470)
+* [波兰式和逆波兰式](http://www.cnblogs.com/chenying99/p/3675876.html)(源码可以看下博客介绍，拓展知识面即可)
+
+        老师，这个题我看半天没理解这个意思，你能给我解释一下吗？
+        能写的一定要全部写出来，实在写不出来了，可以询问面试官，这个题我写到这儿卡住了，但是我知道他的原理，用什么方法...
+
+## 二面/三面
+    回答技巧：
+        不会的情况，这块您了解的比较深，我没有了解这么多
+        不会的情况，坦诚最重要
+        不要和面试官争对错，有质疑的地方，回头我们可以看下资料查证一下，验证看看是不是这样的
+
+### 渲染机制
+
+   1. 什么是DOCTYPE及作用
+
+    告知浏览器解析文档时的文档类型是什么
+
+   ![doctype](doctype.png)
+   2. 浏览器渲染过程
+
+   ![渲染](渲染.png)
+   3. 重排Reflow
+   ![重排](重排.png)
+
+   思考如何避免触发reflow,根据触发的条件
+
+   4. 重绘Repaint(页面要呈现的内容全部画在屏幕上)
+
+            触发条件：
+                dom改变
+                css改变
+            无法避免，思考如何减少触发？
+                定义一个字段，最后再append，尽量只append一次
+
+   5. 布局Layout
+
+### JS运行机制
+
+         同步任务和异步任务优顺序
+         同步任务
+         console.log(1);
+         异步任务
+         setTimeout(function () {
+             console.log(2);
+         }, 0);
+         同步任务
+         console.log(3);
+
+         名词理解
+             JS单线程(JS在同一时间只能做一件事)
+             任务队列
+
+         请问以下代码会输出什么？**VIP***
+         Condition 1:
+              console.log('A');
+              setTimeout(function () {
+                  console.log('B');
+              }, 0);
+              while (1) {
+
+              }
+              console.log('C');
+         Condition 2:
+             异步任务时间(放入和执行时间): for循环是同步任务，同步任务执行时并没有放到异步队列中，
+                                       只有当函数时间到了才会把任务放到异步队列中，异步队列会等待事件循环执行
+             for (var i = 0; i < 4; i++) {
+                 setTimeout(function () {
+                     console.log(i);
+                 }, 1000);
+             }
+
+
+
+### 页面性能
+
+
+### 错误监控
 
 # 学习锦囊
    * [Js](https://yuchengkai.cn/docs/frontend/#new)
