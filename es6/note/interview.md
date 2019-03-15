@@ -246,7 +246,7 @@
 ### http协议
 * http协议的主要特点
 
-        简单快速(每个资源固定，统一资源符UII)
+        简单快速(每个资源固定，统一资源符URI)
         灵活(一个http协议就可以完成不同数据类型的传输)
         无连接(非keep-alive模式下，每个请求/应答模式都会建立连接一次，完成后会断开)
         无状态(http协议无法区分连接者的身份，如客户端或服务端)
@@ -396,13 +396,13 @@
 
 ### 原型链
    * 创建对象的几种方法
-   1. 字面量
-            > var obj = {a:12}
-            > var o = new Object({a:23})
-   2. 构造函数
-            var M = function(name){this.name=name}
-            var o = new M('cxx')
-   3. Object.create()
+       1. 字面量
+                > var obj = {a:12}
+                > var o = new Object({a:23})
+       2. 构造函数
+                var M = function(name){this.name=name}
+                var o = new M('cxx')
+       3. Object.create()
          > 原理
             创建一个中间对象，让子类的原型对象指向父类的原型对象(即指向同一个地址)
             Object.create =  function (o) {
@@ -411,10 +411,10 @@
                 return new F();
             };
 
-         > 使用
-            var o = {a:34}
-            var o2 = Object.create(o)
-            o2 --> {}
+             > 使用
+                var o = {a:34}
+                var o2 = Object.create(o)
+                o2 --> {}
    * 原型、构造函数、对象实例、原型链
      (原型图解释)
    * instanceOf原理
