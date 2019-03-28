@@ -161,8 +161,8 @@
 * 基本概念（标准模型和IE模型）
 * 标准模型和IE模型区别
 
-![标准模型](standard.png)
-![IE模型](IE.png)
+![标准模型](../standard.png)
+![IE模型](../IE.png)
 
 * CSS如何设置两种模型？
 ```
@@ -207,7 +207,7 @@
 * DOM事件流
 
         事件捕获作用到目标对象，该对象冒泡(上传)到window
-![事件流](事件流.png)
+![事件流](../事件流.png)
 
 * 描述DOM事件捕获的具体流程
 
@@ -269,7 +269,7 @@
         PUT(更新资源)
         DELETE(删除资源)
         HEAD(获取报文首部资源)
-   ![GET和POST区别](difference.png)
+   ![GET和POST区别](../difference.png)
 
 * 常见状态码
        1xx：指示信息--表示请求已接收，继续处理。
@@ -292,15 +292,15 @@
 
 * http协议的主要特点
     * 支持持久连接(http 1.1+支持)
-    ![持久连接](keep-alive.png)
+    ![持久连接](../keep-alive.png)
 
     * 管线化
          * 特点
-       ![管线化](管线化.png)
+       ![管线化](../管线化.png)
 
          * 原理
 
-       ![管线化原理](管线化原理.png)
+       ![管线化原理](../管线化原理.png)
 
 ### 面向对象
    1. 类与实例
@@ -400,21 +400,24 @@
                 > var obj = {a:12}
                 > var o = new Object({a:23})
        2. 构造函数
-                var M = function(name){this.name=name}
+                var M = function(name){ this.name = name }
                 var o = new M('cxx')
        3. Object.create()
          > 原理
-            创建一个中间对象，让子类的原型对象指向父类的原型对象(即指向同一个地址)
-            Object.create =  function (o) {
-                var F = function () {};
-                F.prototype = o;
-                return new F();
-            };
+
+                创建一个中间对象，让子类的原型对象指向父类的原型对象(即指向同一个地址)
+                Object.create =  function (o) {
+                    var F = function () {};
+                    F.prototype = o;
+                    return new F();
+                };
 
              > 使用
+
                 var o = {a:34}
                 var o2 = Object.create(o)
                 o2 --> {}
+
    * 原型、构造函数、对象实例、原型链
      (原型图解释)
    * instanceOf原理
@@ -433,6 +436,9 @@
                     return o
                 }
             }
+
+    柯里化 是把接受多个参数的函数变换成接受一个单一参数(最初函数的第一个参数)的函数，
+          并且返回接受余下的参数且返回结果的新函数的技术
 
 ### 通信
   * 跨域通信
@@ -625,7 +631,7 @@
             条件：用户登录
                  网站接口有漏洞
 
-        ![攻击原理](攻击原理.png)
+        ![攻击原理](../攻击原理.png)
     3. 防御
         * Token验证(手动绑定Token后，访问网站会自动进行Token验证)
         * Referer验证(页面来源，服务器判断页面来源是否是某一站点下)
@@ -666,12 +672,12 @@
 
     告知浏览器解析文档时的文档类型是什么
 
-   ![doctype](doctype.png)
+   ![doctype](../doctype.png)
    2. 浏览器渲染过程
 
-   ![渲染](渲染.png)
+   ![渲染](../渲染.png)
    3. 重排Reflow
-   ![重排](重排.png)
+   ![重排](../重排.png)
 
    思考如何避免触发reflow,根据触发的条件
 
@@ -732,9 +738,9 @@
         解释页面卡死：浏览器页面是单线程的有同步任务执行时，永远都不会去执行异步任务，所以事件触发无效
 
 ### 页面性能
-![页面性能](页面性能.png)
-![异步加载](异步加载.png)
-![缓存](缓存.png)
+![页面性能](../页面性能.png)
+![异步加载](../异步加载.png)
+![缓存](../缓存.png)
 
 ### 错误监控
 1. 前端错误的分类
@@ -743,8 +749,8 @@
 
 2. 错误的捕捉方式
 
-![错误捕捉](错误捕捉.png)
-![捕获](捕获.png)
+![错误捕捉](../错误捕捉.png)
+![捕获](../捕获.png)
 
         performance.getEntries() 获取所有文件的加载(根据获取所有的页面元素减去该方法捕获到的)
 
@@ -770,7 +776,7 @@
     回答灵活(说出自己的出发点和考虑)
 
 ### 业务能力
-![业务能力](业务能力.png)
+![业务能力](../业务能力.png)
 
         用1~2句话把做过的业务描述一下
         业绩尽量量化(用户量多少，收入达到多少...可观数据)
@@ -781,29 +787,29 @@
 
         参考如下：
 
-![业务能力-1](业务能力-1.png)
+![业务能力-1](../业务能力-1.png)
 
 ### 团队协作能力(尽量在描述项目的时候体现出来)
-![团队协作能力](团队协作能力.png)
+![团队协作能力](../团队协作能力.png)
 
         一开始我和leader一起做这个项目，他负责一整块，我负责一整块，
         遇到问题我们俩协商怎么做比较合适，稳定了以后基本上都是我在维护
 
 ### 事务推动能力
-![事务推动能力](事务推动能力.png)
+![事务推动能力](../事务推动能力.png)
 
         一般面试官问你除了项目上还做了什么不错的事情，可以重点描述一下自己对团队以及项目的推进
 
 ### 带人能力（不强求）
-![带人能力](带人能力.png)
+![带人能力](../带人能力.png)
 
 
 ## hr面(会沟通、上进、好性格、有主见、强逻辑、无可挑剔)
 ### 职场竞争力
-![职场竞争力](职场竞争力.png)
+![职场竞争力](../职场竞争力.png)
 
 ### 职业规划
-![规划](规划.png)
+![规划](../规划.png)
 
     1. 我平时很崇拜那些技术大牛，我也要经过几年的努力，不断吸收，成为技术大牛
     2. 近阶段，如果公司给我安排某个岗位，我要先清楚这个岗位做什么，难点是什么，突破点在哪里，在一年内做到极致
@@ -824,3 +830,12 @@
    * [display:table-cell布局](https://www.zhangxinxu.com/wordpress/2010/10/%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84%E5%87%A0%E7%A7%8Ddisplaytable-cell%E7%9A%84%E5%BA%94%E7%94%A8/)
    * [知识梳理集锦](https://juejin.im/post/5c64d15d6fb9a049d37f9c20)
    * [时间充裕可以参考力扣算法学习网站](https://leetcode-cn.com/explore/)
+   * [闭包父子级共享问题](https://www.cnblogs.com/TomXu/archive/2012/01/31/2330252.html)
+   * [setTimeout第三个参数](https://www.cnblogs.com/leaf930814/p/6828588.html)
+   * [typeof、instanceof、isArray区别](https://www.cnblogs.com/WhiteHorseIsNotHorse/p/6261770.html)
+   * [call/apply区别以及应用](http://www.yaya12.com/archives/509)
+   * [IndexDB详解](http://www.ruanyifeng.com/blog/2018/07/indexeddb.html)
+   * [JS 详解 Cookie、 LocalStorage 与 SessionStorage](https://www.cnblogs.com/minigrasshopper/p/8064367.html)
+   * [Web Worker 使用教程](http://www.ruanyifeng.com/blog/2018/07/web-worker.html)
+   * [手写call、apply、bind实现及详解](https://juejin.im/post/5c564e3bf265da2d943f3af3)
+   * [缓存的详解](http://www.cnblogs.com/chenqf/p/6386163.html)
