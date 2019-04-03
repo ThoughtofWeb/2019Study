@@ -1,4 +1,4 @@
-# Vue2.5 阅友书架
+# Vue2.5
 
 ## 项目简介
 
@@ -10,9 +10,20 @@
     * 基于V8引擎，让js代码脱离浏览器运行
     * vue-cli3.0需要nodeJs8.9+版本
     * 使用nvm/nvm-windows在同一电脑管理多个node版本
+    * [使用nvm管理node版本](https://blog.csdn.net/qq_32682137/article/details/82684898)
+    * [webpack3.10.0](https://doc.webpack-china.org)
+    * [babel](https://babeljs.cn/docs/usage/polyfill/)
+    * [eslint](http://eslint.cn/user-guide/configuring)
+    * [ES6](http://es6-features.org/#DefaultParameterValues)
+    * [Sass](http://sass.bootcss.com)
+    * VueJs
 
    3. web字体（谷歌）
+
    4. 引入scss
+
+           cnpm install node-sass --save-dev
+           cnpm install sass-loader --save-dev
 
            --> 引入public文件下的样式文件
                 <link rel="stylesheet" href="<%= BASE_URL %>fonts/daysOne.css">
@@ -112,6 +123,13 @@
                            子 ($on接收)
                            子 (行内@api接收)
 
+                    非父子组件传值
+                        1) Vuex
+                        2) 发布订阅模式event bus
+                           https://blog.csdn.net/hushilin001/article/details/75142475
+
+
+
             // vue实例
                 vm.$el 获取实例dom对象
                 vm.destroy()销毁实例
@@ -209,10 +227,98 @@
                 绑定：<div ref="book"></div>
                 输出：this.$refs.book
 
-            //
+            //  组件参数的校验
+                    约束传递的参数的类型
+                    props: {
+                        content: Number
+                    }
+                    props: {
+                        content: {
+                            type: String, //设置传递的参数类型
+                            required： true, //必填
+                            default: "设置默认值",
+                            validator: function(value){
+                                return (value.length > 5)
+                            }
+                        }
+                    }
+                    props: {
+                        content:[ Number, String ]
+                    }
             
-            //
+                非props特性
+                    1）父组件向子组件传递参数，子组件如果不接收，调用会报错
+                    2）父组件给子组件传参时，父组件的属性会自动绑定到子组件的最外层标签的html上
 
+            // 给组件绑定原生事件
+                <child @click.native="handleClick"></child>
+                https://blog.csdn.net/hani_wen/article/details/80804091
+
+            // 插槽slot（只有一个）
+                为了更方便地向子组件传递元素标签
+                    <slot>此处设置默认值</slot>
+                具名插槽（可以有多个）：
+                    <div slot="header">header</div>
+                    <slot name="header">header，此处设置默认值</slot>
+            
+            // 作用域插槽
+                当子组件做循环或者某一部分dom值应该由外部传递进来时
+                <child>
+                    // 父组件若要使用子组件传递的参数必须使用template
+                    <template slot-scope="props">
+                        <h1>{{props.item}}</h1>
+                    </template>
+                </child>
+
+                <slot v-for="item in list" :item=item></slot>
+
+            // 动态组件
+                <!-- 动态切换组件 官方提供 -->
+                <component is="type"></component>
+                v-once指令可以提高静态内容的展示效率,直接从内存中获取，不需要重新创建
+                <div v-once>header</div>
+
+            // Vue-Css动画
+                <transition name="fade" enter-active-class="active">
+                    <div>...</div>
+                </transition>
+                    enter-active-class="enter" 自定义active类
+                    enter-active-class="leave"
+                    name="fade" 自定义类名前缀  默认是v-enter...
+                    https://cn.vuejs.org/v2/guide/transitions.html
+
+                使用动画库Animate.css
+                    enter-active-class="animated swing" 
+                    enter-active-class="animated shake"
+                    刷新时附上动画效果
+                    <transition appear appear-active-class="animated shake"></transition>
+                    刷新/过渡/动画同时加上
+                    <transition 
+                        name="fade" 
+                        enter-active-class="animated swing fade-enter-active" 
+                        enter-active-class="animated shake fade-leave-active" 
+                        appear 
+                        appear-active-class="animated shake">
+                    </transition>
+
+                确定动画的时间是以什么为准?过渡？动画？ 设置type="transition"
+
+                手动设置动画的执行时长 :duration = "{enter: 5000, leave: 2000}"
+                    
+                JS动画钩子
+                    1）@beforeEnter = "" 一个参数el
+                    2）@enter = "" 两个参数el,done
+                    3）@afterEnter = "" 一个参数el
+                    4）@beforeLeave = "" 一个参数el
+                    5）@leave = "" 两个参数el,done
+                    6）@afterLeave = "" 一个参数el
+                    7) ** js动画库Velocity (配合以上api实现动画)
+                        http://VelocityJS.org 
+
+                给循环的元素加动画
+                <transition-group>
+                    <div v-for=""></div>
+                </<transition-group>>
 
    9. 设计模式
 
@@ -224,7 +330,41 @@
 
    10. 前端组件化的理解？
 
+   11. 单页应用和多页应用的区别？
+        单页应用：优点：页面切换快
+                 缺点：首屏时间慢，SEO差
+        多页应用相反
 
+   12. 移动端1px解决方案（即一倍屏、二倍屏下有像素偏差）
+        引入border.css
+        移动端点击300ms延迟问题
+
+   13. 业务开发流程
+          * 技术选型
+           构建工具(资源压缩、静态资源替换、模块化处理、编译处理)
+
+                   gulp    任务管理，对文件的操作是流式，不会频繁写入，读出一次，然后在内存中完成，优化了grunt
+                   grunt   任务管理，对文件的操作是写入
+                   gulp、grunt 一般用于任务管理，本身无法编译，借助webpack进行编译
+                   webpack 编译打包
+                   fis 百度推出的集成方案
+                   prepack 无dom&bom打包
+                   rollup 类似webpack
+
+           MVVM框架 vue/react/angular (基于团队人数，遵循一定的规范和原则)
+
+           模块化设计 突出模块化设计的亮点
+
+                   CSS
+                   JS 抽象模块化js文件
+
+           自适应方案
+
+           代码维护和复用性思考
+               需求变更
+               产品迭代
+               bug定位
+               新功能开发
 
 
 ## 学习锦囊
