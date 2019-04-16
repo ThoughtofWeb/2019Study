@@ -371,7 +371,7 @@
                 设备像素即显卡、硬件像素点 比如一个像素需要四个物理像素点来展示
                 逻辑像素即css像素
                 设备像素比即设备像素与物理像素的比值
-                veiwport 视口
+                veiwport 视口 gitbub上hotcss引入移动端自适应  https://www.jianshu.com/p/64a6cafb1d5a
                 rem/em区别
 
                 工作原理：利用viewport和设备像素比调整基准像素
@@ -395,6 +395,35 @@
                bug定位
                新功能开发
 
+   20. 巧妙处理
+      * 背景图
+
+            background: #fff url(//m.jr.jd.com/spe/qyy/main/images/jr-logo.png) center center no-repeat;
+            background-size: auto 50%;
+
+      * 选择器
+
+            &:first-child {}
+
+      * 自适应盒模型属性
+
+            box-sizing:border-box;
+
+      * css模块化样式组合
+
+            Condition 1
+            html  :class="[btnClass,cname]"
+
+            Js    data() {
+                    return {
+                        btnClass: "btn"
+                    };
+                  }
+            css   .btn {}
+
+            Conditon 2
+            html  :class="[$style.btn,cname]"
+            css   .btn {}
 
 ## 学习锦囊
    * [web字体](https://www.jianshu.com/p/796bf490186c)
