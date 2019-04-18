@@ -358,7 +358,7 @@
                    CSS模块化
                       设计原则：1. 可复用 能继承 要完整
                                2. 周期性迭代
-                      设计方案：1. 先整体再部分最后颗粒化（布局、页面、功能）
+                      设计方案：1. 先整体再部分最后颗粒化（布局、页面、功能、业务）
                                2. 先抽象再具体
                    JS 抽象模块化js文件
                       设计原则：1. 高内聚低耦合
@@ -397,10 +397,10 @@
 
    14. 上线
 
-             1) npm run build
-             2) js压缩 npm i --save uglifyjs-webpack-plugin
+             1) js压缩 npm i --save uglifyjs-webpack-plugin
                 webpack.config.js 引入&初始化
-             3) css压缩 minimize
+             2) css压缩 minimize
+             3) npm run build
              4) 开启source-map 代码调试
 
    15. 面试技巧
@@ -463,8 +463,9 @@
                 产生的问题是 1. media样式层叠覆盖
                            2. 设备太多，覆盖的面很窄，不具备通用性
                 技术方案 动态计算font-size
-                        原理是rem
-                        px2rem 将设计稿所有的px转成rem,再根据rem动态计算font-size
+                        原理是利用viewport和设备像素比调整基准像素
+                              利用px2rem自动转换css单位
+                              px2rem 将设计稿所有的px转成rem,再根据rem动态计算font-size
 
             10. 项目的改进空间？
                  可以聊聊gzip压缩
