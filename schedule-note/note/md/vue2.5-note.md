@@ -479,63 +479,60 @@
 ![webpack](../noteMsg/webpack.png)
 ![vue](../noteMsg/vue.png)
 
-
-
-
    20. 巧妙处理
       * 背景图
 
-            background: #fff url(//m.jr.jd.com/spe/qyy/main/images/jr-logo.png) center center no-repeat;
-            background-size: auto 50%;
+                background: #fff url(//m.jr.jd.com/spe/qyy/main/images/jr-logo.png) center center no-repeat;
+                background-size: auto 50%;
 
       * 选择器
 
-            &:first-child {}
+                &:first-child {}
 
       * 自适应盒模型属性
 
-            两者搭配更友好
-            box-sizing:border-box;
-            justify-content: border-box; 处理字体等行内块元素对齐
+                两者搭配更友好
+                box-sizing:border-box;
+                justify-content: center; 处理字体等行内块元素对齐
 
       * css模块化样式组合
 
-            Condition 1
-            html  :class="[btnClass,cname]"
+                Condition 1
+                html  :class="[btnClass,cname]"
 
-            Js    data() {
-                    return {
-                        btnClass: "btn"
-                    };
-                  }
-            css   .btn {}
+                Js    data() {
+                        return {
+                            btnClass: "btn"
+                        };
+                      }
+                css   .btn {}
 
-            Conditon 2
-            html  :class="[$style.btn,cname]"
-            css   .btn {}
+                Conditon 2
+                html  :class="[$style.btn,cname]"
+                css   .btn {}
 
       * 页面上特殊的线（用于间隔的线）
 
-            使用伪元素
-            &:after{
-                content: " ";
-                display: block;
-                width: 100%;
-                height: 0px;
-                box-sizing: border-box;
-                border-bottom: 1px solid #ddd;
-                position: relative;
-                top: -208px;
-            }
+                使用伪元素
+                &:after{
+                    content: " ";
+                    display: block;
+                    width: 100%;
+                    height: 0px;
+                    box-sizing: border-box;
+                    border-bottom: 1px solid #ddd;
+                    position: relative;
+                    top: -208px;
+                }
 
       * 垂直方向上对齐方式
 
-            vertical-align: 1px; 设置具体的像素可以实现对齐,可以为负值
+                vertical-align: 1px; 设置具体的像素可以实现对齐,可以为负值
 
       * 业务组件内部要灵活使用html标签做选择器，避免多使用更多的类
 
-            dl>dt>dd
-            &:nth-child(2){} 向父级找当前第二个兄弟元素
+                dl>dt>dd
+                &:nth-child(2){} 向父级找当前第二个兄弟元素
 
       * 修改css module之外的组件要单独写<style></style>
 
