@@ -170,4 +170,19 @@
 
 25. HTML5新规范？
 
+        语义化标签
+        音频视频
+        localStorage & sessionStorage
+        postMessage
+        web worker
+        WebSocket
+        Geolocation（地理定位）用于定位用户的位置
+        拖拽
+
+26. web request动画帧
+
+        css3不能实现scrollTop，但是requestAnimationFrame可以
+        css3对贝塞尔曲线轨迹有限制，但是requestAnimationFrame没有
+        与setTimeout用法类似，但是requestAnimationFrame调用一次只会重绘一次动画，资源高效利用
+
 
