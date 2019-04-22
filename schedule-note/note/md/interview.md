@@ -640,6 +640,8 @@
   * XSS (详情参考慕课免费视频www.imooc.com/learn/812)
         攻击原理：向页面注入脚本，不需要进行登录验证
         防御：使插入的脚本不可执行
+             cookie 设置 httpOnly
+             转义页面上的输入内容和输出内容
   * 区别(在于攻击原理)
 
 ### 算法(技巧：不会也要体现你是会的)
@@ -839,3 +841,6 @@
    * [Web Worker 使用教程](http://www.ruanyifeng.com/blog/2018/07/web-worker.html)
    * [手写call、apply、bind实现及详解](https://juejin.im/post/5c564e3bf265da2d943f3af3)
    * [缓存的详解](http://www.cnblogs.com/chenqf/p/6386163.html)
+   * [XSS和CSRF](https://juejin.im/post/5c6d142151882503b3271f4b)
+   * [垃圾回收机制](https://juejin.im/post/5c6bba32f265da2db07382cf)
+   * [DNS预解析](https://blog.csdn.net/weixin_42594068/article/details/80978492)
