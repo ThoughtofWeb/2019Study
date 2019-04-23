@@ -28,7 +28,7 @@
 5. 平时看的技术网站？
 
         一般是根据技术论坛上最新的推文去关注一些博客和github上有意思的文章网站
-        最近在看的是。。。（狗子待补充）
+        最近在看的是树组件的实现原理。。。
 
 6. 为什么用这样的框架？
 
@@ -105,7 +105,6 @@
         其次项目目录结构的设计要划分资源文件、css、js以及公共的入口文件，
         最后组件化的设计要拆分公共组件、可复用的功能组件以及单独的业务组件，
         抽象化，尽量做到业务解耦，这样做不仅能够提高开发效率，对于后期的迭代和维护也是很有益的。
-
 13. 介绍一下你近期做的项目？
 
         请问我需要介绍一下这个项目的背景吗？
@@ -182,6 +181,7 @@
 
 26. web request动画帧
 
+        浏览器会遍历动画帧请求回调函数列表
         css3不能实现scrollTop，但是requestAnimationFrame可以
         css3对贝塞尔曲线轨迹有限制，但是requestAnimationFrame没有
         与setTimeout用法类似，但是requestAnimationFrame调用一次只会重绘一次动画，资源高效利用
@@ -239,7 +239,7 @@
         1xx: 接受，继续处理
         200: 成功，并返回数据
         201: 已创建
-        202: 已接受
+        202: 服务器已接受请求,但尚未处理
         203: 成为，但未授权
         204: 成功，无内容
         205: 成功，重置内容
@@ -281,6 +281,14 @@
 57. 执行上下文的过程
 
 58. instanceof原理
+
+        while(x.__proto__!==null) {
+            if(x.__proto__===y.prototype) {
+                return true;
+            }
+            x.__proto__ = x.__proto__.proto__;
+        }
+        if(x.__proto__==null) {return false;}
 
 59. 闭包
 
@@ -370,7 +378,7 @@
 
 83. http1.1优化了什么？
 
-84. V8垃圾回收机制
+84. V8垃圾回收机制（一定要看下）
 
 85. TCP三次握手(画个图即可)
 
@@ -435,7 +443,310 @@
 
 96. 手写bind/call/apply?
 
-97.
+97. 这边是一个vue重构到react的项目，最近招人来做这块的内容，包括webpack之类的都是重新搭，你觉得你能hold住吗？
+
+98. 打算在上海定居吗？是打算啥时候回二线？
+
+99. 为什么不推荐用style内联元素？内联元素有什么缺点？
+
+        css文件可以缓存
+
+100. 你对团队的要求是怎么样的?
+
+            人员配比
+            解决问题
+            开发效率
+
+101. Fetch 相对于传统的 Ajax 有哪些改进？
+
+102. 异步函数中使用this无法指向vue实例对象
+
+         用箭头函数或者指定变量赋值为this
+
+103. 定时器在组件销毁后还在执行
+
+         在销毁组件的生命周期中销毁定时器或者一些动画的js
+         beforeDestroy(){
+              //我通常是把setInterval()定时器赋值给this实例，然后就可以像下面这么停止。
+             clearInterval(this.intervalId);
+         }
+
+104. 动态添加的dom没有样式
+
+         1 当添加的部分样式不会太多，而且是动态加载的，可以将其设置为非scoped的
+         2 将添加dom部分用的样式放到非scoped样式标签中
+         3 将添加的部分，如果有必要，可以另外写一个页面拆分的vue组件
+         4 如果你想整个项目覆盖，就可以在src/styles下定义common.scss 这样的来重写覆盖样式
+
+105. vue中直接修改数据，页面视图不更新
+
+         1 this.$set(你要改变的数组/对象，你要改变的位置/key，你要改成什么value)
+             this.$set(this.arr, 0, "OBKoro1"); // 改变数组
+             this.$set(this.obj, "c", "OBKoro1"); // 改变对象
+
+         2 数组原生方法触发视图更新: splice()、 push()、pop()、shift()、unshift()、sort()、reverse()
+
+106. vue中的data必须为函数?
+
+         为了避免多个组件使用同一数据互相影响，所以讲data约定为了返回函数类型，返回需要的对象，
+         以此保证子组件在数据渲染的时候不会互相影响
+
+107. ES6 import 引用问题
+
+         ES6中，导入与导出指向的是内存地址，如果修改了对象中的属性，导出值会受导入值影响，影响到其他模块的使用。
+
+         对象不复杂时，可以使用 JSON.parse(JSON.stringify(str)) 来生成一个全新的深度拷贝的数据对象。
+         不过当组件较多、数据对象复用程度较高时，很明显会产生性能问题，这时我们可以考虑使用 Immutable.js
+
+108. 路由参数变化组件不更新（使用路由出现问题如何解决）
+
+          原因：获取参数写在了created路由钩子函数中，路由参数变化的时候，生命周期不会重新执行。
+          解决方案1：watch监听router
+                 2：用activated钩子代替原来在created、mounted钩子中获取数据
+                 3：给router-view添加一个不同的key，只要url变化了，就一定会重新创建这个组件。
+
+109. 怎么快速定位哪个组件出现性能问题
+
+110. 实现 Promise.finally
+
+         finally 方法用于指定不管 Promise 对象最后状态如何，都会执行的操作
+         finally 特点：
+                 不接收任何参数。
+                 finally 本质上是 then 方法的特例
+
+         Promise.prototype.finally = function (callback) {
+           let P = this.constructor
+           return this.then(
+             value  => P.resolve(callback()).then(() => value),
+             reason => P.resolve(callback()).then(() => { throw reason })
+           )
+         }
+
+111. 实现 Vue SSR
+
+112. grid 布局
+
+113. babel-plugin-transform-runtime可以兼容并转化大部分的es6语法，但是部分语法不能转化
+
+               推荐使用完整的 babel-polyfill
+
+114. 动态懒加载组件
+
+                1 webpack的路径使用变量拼接，必须预先给出一个相对路径，然后把具体的组件路径在传入
+                2 用一个箭头函数，将需要传入的组件名或者相对路径传入
+                3 用process.env.NODE_ENV确定使用哪种加载方式
+
+                import vOther from '@/components/other'
+                //修改后
+                const vOther = () => import('@/components/other')
+
+115. 当改变对象的非第一层属性或者值时，虽然值改变了，但是并未触发其watch方法监听
+
+                使用deep，并且改变数值的方式要使用this.$set(this.obj,key,value)
+                watch:{
+                 person:{
+                      deep:true,
+                      immediate:true
+                    }
+                 },
+                 created(){
+                    setTimeout(()=>{
+                      // this.$set(this.person,'tip',45);
+                    },2000)
+                  }
+                }
+
+116. 使用eventBus跨页面传参错误
+
+                问题 ：第一次触发并没有执行接收
+                      后续的触发都会积累之前的
+
+                解决： this.$nextTick(function(){
+                        //codes here
+                      })
+
+117. 在进行项目优化的时候，我们需要针对性的分析出哪些文件大，以及如何优化
+
+                vue-cli初始化的项目，会默认安装webpack-bundle-analyzer插件
+
+118. $nextTick
+
+119. 生命周期
+
+120. 数据响应(数据劫持)
+
+121. virtual dom 原理实现
+
+122. Proxy 相比于 defineProperty 的优势
+
+123. vue-router
+
+124. vuex
+
+125. 组件间通信
+
+126. Vue computed 实现
+
+127. Vue complier 实现
+
+128. 组件间通信
+
+129. [window的onload事件和domcontentloaded谁先谁后？](https://www.jianshu.com/p/d5cedce95acc)
+
+                1 onload事件是DOM事件，onDOMContentLoaded是HTML5事件。
+                2 onload事件会被样式表、图像和子框架阻塞，而onDOMContentLoaded不会。
+                3 当加载的脚本内容并不包含立即执行DOM操作时，onDOMContentLoaded比onload事件执行时间更早。
+
+130. 说一下箭头函数This指向问题
+
+131. 说一下你对generator的了解？
+
+132. 说一下你对promise的了解？
+
+133. for...in和for...of和Object.keys有什么区别？
+
+134. 使用过flex布局吗？flex-grow和flex-shrink属性有什么用？
+
+135. 箭头函数和普通函数有什么区别？
+
+136. 怎么优化页面的加载速度？
+
+            HTML优化：
+                使用语义化标签
+                减少iframe：iframe是SEO的大忌，iframe有好处也有弊端
+                避免重定向
+            CSS优化：
+                布局代码写前面
+                删除空样式
+                不滥用浮动，字体，需要加载的网络字体根据网站需求再添加
+                选择器性能优化
+                避免使用表达式，避免用id写样式
+            js优化：
+                压缩
+                减少重复代码
+            图片优化：
+                使用WebP
+                图片合并，CSS sprite技术
+
+            减少DOM操作
+            利用缓存
+            使用CDN加速
+            使用DNS预解析
+
+137. promise和async/await和setTimeout区别
+
+138. promise如何实现then介绍
+
+139. 介绍es6的功能
+
+140. state和props区别
+
+141. 介绍defineProperty,什么时候用到？
+
+142. 原生dom事件为什么不移除会造成内存泄漏？
+
+143. 定时器为什么是不精确的？
+
+144. setInterval有什么注意的？
+
+145. 单例、工厂、观察者模式项目中的实际场景？
+
+146. 项目中树组件的使用场景及了解？
+
+147. 为什么虚拟dom比真实dom性能好？
+
+148. html语义化的理解？
+
+149. 介绍单页应用和多页应用？
+
+                单页应用优点：  前后端分离
+                              减轻服务器压力
+                              增强用户体验
+                       缺点：  prerender预渲染优化SEO
+
+150. 介绍localStorage的API？
+
+                getItem
+                setItem
+                removeItem
+                clear
+
+151. b和strong区别
+
+            ```
+                <b>是html的标签，而<strong>是web标准中xhtml的标签
+                <b>标签是一个实体标签，<strong>标签是一个逻辑标签，它的作用是加强字符的语气
+            ```
+
+152. 介绍事件委托
+
+153. 如何处理异常捕获
+
+154. 类数组和数组的区别？如何将类数组转为数组
+
+155. 平时怎么做继承？
+
+156. 深拷贝怎么实现的？
+
+157. let作用域怎么实现的？
+
+158. 发布订阅者模式和观察者模式区别？
+
+159. async、await怎么实现的
+
+160. promise构造函数是同步还是异步，then呢？
+
+161. 词法作用域和this的区别？
+
+162. setState为什么默认是异步的？什么时候是同步的？
+
+163. promise的三种状态
+
+164. promise.all的实现原理
+
+165. 遇到的复杂的业务场景举例
+
+166. 介绍Immuable.js
+
+167. webpack和gulp的区别
+
+168. 如何实现异步加载
+
+169. 网站seo处理
+
+170. call和apply区别
+
+171. async里有多个await请求，怎么优化
+
+172. 介绍Fiber
+
+173. 前端怎么做单元测试？
+
+174. 如何解决props层级过深的问题？
+
+175. webpack生命周期
+
+176. 常用的plugins
+
+177. 比较两个对象是否相等
+
+178. 快速排序、选择排序、冒泡排序
+
+179. 表单跨域
+
+180. position:sticky
+
+181. 事件代理及优缺点
+
+182. promise如何进行异常捕获
+
+183. 有时间看下http1.1和http2.0
+
+184. webpack的plugins怎么实现
+
+
+
+
 
 
 
