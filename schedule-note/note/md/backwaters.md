@@ -159,6 +159,11 @@
 
 21. 如何使用webpack的？
 
+        webpack能够将各个模块进行按需加载,实现了模块化开发和文件处理。
+        npm init
+        npm i --save webpack
+        ...
+
 22. 前端路由的原理？
 
         History Api  优雅，但对浏览器有要求    onpopstate    onpushstate
@@ -392,6 +397,8 @@
 
 87. Web Worker原理
 
+         postMessage
+
 88. 存储方式
 
         cookie
@@ -442,7 +449,7 @@
         3. 针对公司一些成熟的组件，可以开源作品或者放到技术博客上去
         4. 我希望公司给我一些技术分享的机会，让自己不断成长
 
-96. 手写bind/call/apply?
+96. 怎么快速定位哪个组件出现性能问题
 
 97. 这边是一个vue重构到react的项目，最近招人来做这块的内容，包括webpack之类的都是重新搭，你觉得你能hold住吗？
 
@@ -459,6 +466,10 @@
             开发效率
 
 101. Fetch 相对于传统的 Ajax 有哪些改进？
+
+            语法简洁，更加语义化
+            基于标准 Promise 实现，支持 async/await
+            同构方便，使用 isomorphic-fetch
 
 102. 异步函数中使用this无法指向vue实例对象
 
@@ -506,7 +517,9 @@
                  2：用activated钩子代替原来在created、mounted钩子中获取数据
                  3：给router-view添加一个不同的key，只要url变化了，就一定会重新创建这个组件。
 
-109. 怎么快速定位哪个组件出现性能问题
+109. position:sticky
+
+           当元素在屏幕内，表现为relative，就要滚出显示器屏幕的时候，表现为fixed
 
 110. 实现 Promise.finally
 
@@ -523,7 +536,11 @@
            )
          }
 
-111. 实现 Vue SSR
+111. 事件代理及优缺点
+
+         优点：1.可以大量节省内存占用，减少事件注册。比如ul上代理所有li的click事件就很不错。
+              2.新增子对象时，无需再对其进行事件绑定
+         缺点：如果把所有事件都用事件代理，可能会出现事件误判。即本不该被触发的事件被绑定上了事件。
 
 112. grid 布局
 
@@ -568,39 +585,77 @@
 
 117. 在进行项目优化的时候，我们需要针对性的分析出哪些文件大，以及如何优化
 
-                vue-cli初始化的项目，会默认安装webpack-bundle-analyzer插件
+          vue-cli初始化的项目，会默认安装webpack-bundle-analyzer插件
 
 118. $nextTick
+
+          可以看做是一个微任务，在数据更新后调用，做异步处理
 
 119. 生命周期
 
 120. 数据响应(数据劫持)
 
+         当我们访问或设置对象的属性的时候，触发Object.defineProperty来劫持对象属性的setter和getter
+
 121. virtual dom 原理实现
 
-            更新dom结点是非常昂贵的，用js对象来代替dom结点，更新高效且便宜
+         更新dom结点是非常昂贵的，用js对象来代替dom结点，更新高效且便宜
 
 122. Proxy 相比于 defineProperty 的优势
 
+         Proxy可以直接监听对象而非属性,可以劫持整个对象,并返回一个新对象,而Object.defineProperty只能遍历对象属性直接修改。
+              可以直接监听数组的变化
+         Proxy的劣势就是兼容性问题,而且无法用polyfill磨平
+
 123. vue-router
+
+         两种模式history和hash, 可以归为单页应用的核心
+
+         query和params区别？
 
 124. vuex
 
 125. 组件间通信
 
-126. Vue computed 实现
+         父  :name="projectName"
+         子   props接收
 
-127. Vue complier 实现
+         子  $emit('事件'，属性)
+         父  @事件 接收
+             父级若不在html结构上绑定事件，使用$on()接收
 
-128. 组件间通信
+         父级直接修改子级实例上的数据 $child
+         子级直接修改父级实例上的数据 $parent
+
+         vuex   数据量很大时
+                通过mutation同步操作state
+                通过action异步操作state
+
+         provide返回一个对象，内部的属性值可以在所有子孙结点inject获取
+
+126. 词法作用域和this的区别？
+
+         词法作用域是在写代码或者说定义时确定的，而this是在运行时确定的。
+         词法作用域关注函数在何处声明，而this关注函数从何处调用。
+
+127. 常用的webpack plugins
+
+         html-webpack-plugin 生成html
+         copy-webpack-plugin 静态资源直接拷贝到打包后的文件夹
+         extract-text-webpack-plugin 优化压缩
+         uglifyjs-webpack-plugin
+
+128. promise构造函数是同步还是异步，then呢？
 
 129. [window的onload事件和domcontentloaded谁先谁后？](https://www.jianshu.com/p/d5cedce95acc)
 
-                1 onload事件是DOM事件，onDOMContentLoaded是HTML5事件。
-                2 onload事件会被样式表、图像和子框架阻塞，而onDOMContentLoaded不会。
-                3 当加载的脚本内容并不包含立即执行DOM操作时，onDOMContentLoaded比onload事件执行时间更早。
+         1 onload事件是DOM事件，onDOMContentLoaded是HTML5事件。
+         2 onload事件会被样式表、图像和子框架阻塞，而onDOMContentLoaded不会。
+         3 当加载的脚本内容并不包含立即执行DOM操作时，onDOMContentLoaded比onload事件执行时间更早。
 
 130. 说一下箭头函数This指向问题
+
+          父级作用域
 
 131. 说一下你对generator的了解？
 
@@ -608,9 +663,18 @@
 
 133. for...in和for...of和Object.keys有什么区别？
 
+         Object.keys与for in区别在于不能遍历出原型链上的属性
+         for of不支持遍历普通对象，可通过与Object.keys()搭配使用遍历
+         for of遍历后的输出结果为数组元素的值
+
 134. 使用过flex布局吗？flex-grow和flex-shrink属性有什么用？
 
 135. 箭头函数和普通函数有什么区别？
+
+         无arguments
+         无new
+         不绑定this
+         无原型属性
 
 136. 怎么优化页面的加载速度？
 
@@ -640,9 +704,49 @@
 
 138. promise如何实现then介绍
 
+         function Promise(fn){
+           var state = 'pending';
+           var doneList = [];
+           var failList= [];
+           this.then = function(done ,fail){
+             switch(state){
+               case "pending":
+                 doneList.push(done);
+                 //每次如果没有推入fail方法，我也会推入一个null来占位
+                 failList.push(fail || null);
+                 return this;
+                 break;
+               case 'fulfilled':
+                 done();
+                 return this;
+                 break;
+               case 'rejected':
+                 fail();
+                 return this;
+                 break;
+             }
+           }
+           function resolve(newValue){
+             state = "fulfilled";
+
+           }
+           function reject(newValue){
+             state = "rejected";
+
+           }
+           fn(resolve,reject);
+         }
+         var p = function (){
+             return new Promise(function(resolve,reject){
+                 setTimeout(function(){
+                   reject('p 的结果');
+                 }, 100);
+             });
+         }
+
 139. 介绍es6的功能
 
-140. state和props区别
+140. call和apply区别
 
 141. 介绍defineProperty,什么时候用到？
 
@@ -652,11 +756,16 @@
 
 144. setInterval有什么注意的？
 
+            1.第一个参数必须是一个方法且必须加引号，否则只会执行一次
+            2.SetInterval只能在方法外使用
+
 145. 单例、工厂、观察者模式项目中的实际场景？
 
 146. 项目中树组件的使用场景及了解？
 
 147. 为什么虚拟dom比真实dom性能好？
+
+            虚拟DOM不会进行排版与重绘操作,减少对dom操作的次数
 
 148. html语义化的理解？
 
@@ -697,27 +806,45 @@
 
 159. async、await怎么实现的
 
-160. promise构造函数是同步还是异步，then呢？
+160. 如何解决props层级过深的问题？
 
-161. 词法作用域和this的区别？
+161. 比较两个对象是否相等
 
-162. setState为什么默认是异步的？什么时候是同步的？
+         function isObjectValueEqual(a, b) {
+             var aProps = Object.getOwnPropertyNames(a);
+             var bProps = Object.getOwnPropertyNames(b);
+             if (aProps.length != bProps.length) {
+                 return false;
+             }
+             for (var i = 0; i < aProps.length; i++) {
+                 var propName = aProps[i];
+                 if (a[propName] !== b[propName]) {
+                     return false;
+                 }
+             }
+             return true;
+         }
+
+162. promise如何进行异常捕获
 
 163. promise的三种状态
 
 164. promise.all的实现原理
 
-165. 遇到的复杂的业务场景举例
+165. webpack和gulp的区别
 
-166. 介绍Immuable.js
+         gulp是基于流的自动化构建工具，但不包括模块化的功能，如果要用到的话，就需要引入外部文件，比如require.js等；
+         而webpack是自动化模块打包工具，本身就具有模块化，并且也具有压缩合并的功能。
 
-167. webpack和gulp的区别
+166. 遇到的复杂的业务场景举例
+
+167. 介绍Immuable.js
 
 168. 如何实现异步加载
 
 169. 网站seo处理
 
-170. call和apply区别
+170. 手写bind/call/apply?
 
 171. async里有多个await请求，怎么优化
 
@@ -725,27 +852,22 @@
 
 173. 前端怎么做单元测试？
 
-174. 如何解决props层级过深的问题？
+174. 快速排序、选择排序、冒泡排序
 
-175. webpack生命周期
+175. 表单跨域
 
-176. 常用的plugins
+176. 实现 Vue SSR
 
-177. 比较两个对象是否相等
+177. 有时间看下http1.1和http2.0
 
-178. 快速排序、选择排序、冒泡排序
+178. webpack的plugins怎么实现
 
-179. 表单跨域
+179. Vue computed 实现
 
-180. position:sticky
+180. Vue complier 实现
 
-181. 事件代理及优缺点
+181. webpack生命周期
 
-182. promise如何进行异常捕获
-
-183. 有时间看下http1.1和http2.0
-
-184. webpack的plugins怎么实现
 
 
 
