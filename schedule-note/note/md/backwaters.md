@@ -105,6 +105,7 @@
         其次项目目录结构的设计要划分资源文件、css、js以及公共的入口文件，
         最后组件化的设计要拆分公共组件、可复用的功能组件以及单独的业务组件，
         抽象化，尽量做到业务解耦，这样做不仅能够提高开发效率，对于后期的迭代和维护也是很有益的。
+
 13. 介绍一下你近期做的项目？
 
         请问我需要介绍一下这个项目的背景吗？
@@ -455,21 +456,23 @@
 
 98. 打算在上海定居吗？是打算啥时候回二线？
 
+        暂时没有回去的打算
+
 99. 为什么不推荐用style内联元素？内联元素有什么缺点？
 
         css文件可以缓存
 
 100. 你对团队的要求是怎么样的?
 
-            人员配比
-            解决问题
-            开发效率
+         人员配比
+         解决问题
+         开发效率
 
 101. Fetch 相对于传统的 Ajax 有哪些改进？
 
-            语法简洁，更加语义化
-            基于标准 Promise 实现，支持 async/await
-            同构方便，使用 isomorphic-fetch
+         语法简洁，更加语义化
+         基于标准 Promise 实现，支持 async/await
+         同构方便，使用 isomorphic-fetch
 
 102. 异步函数中使用this无法指向vue实例对象
 
@@ -490,7 +493,7 @@
          3 将添加的部分，如果有必要，可以另外写一个页面拆分的vue组件
          4 如果你想整个项目覆盖，就可以在src/styles下定义common.scss 这样的来重写覆盖样式
 
-105. vue中直接修改数据，页面视图不更新
+105. vue中直接修改数组，页面视图不更新
 
          1 this.$set(你要改变的数组/对象，你要改变的位置/key，你要改成什么value)
              this.$set(this.arr, 0, "OBKoro1"); // 改变数组
@@ -508,7 +511,8 @@
          ES6中，导入与导出指向的是内存地址，如果修改了对象中的属性，导出值会受导入值影响，影响到其他模块的使用。
 
          对象不复杂时，可以使用 JSON.parse(JSON.stringify(str)) 来生成一个全新的深度拷贝的数据对象。
-         不过当组件较多、数据对象复用程度较高时，很明显会产生性能问题，这时我们可以考虑使用 Immutable.js
+         不过当组件较多、数据对象复用程度较高时，很明显会产生性能问题，这时我们可以考虑使用 Immutable.js(
+         持久化数据结构,使用旧数据创建新数据时，要保证旧数据同时可用且不变)
 
 108. 路由参数变化组件不更新（使用路由出现问题如何解决）
 
@@ -546,42 +550,42 @@
 
 113. babel-plugin-transform-runtime可以兼容并转化大部分的es6语法，但是部分语法不能转化
 
-               推荐使用完整的 babel-polyfill
+         推荐使用完整的 babel-polyfill
 
 114. 动态懒加载组件
 
-                1 webpack的路径使用变量拼接，必须预先给出一个相对路径，然后把具体的组件路径在传入
-                2 用一个箭头函数，将需要传入的组件名或者相对路径传入
-                3 用process.env.NODE_ENV确定使用哪种加载方式
+         1 webpack的路径使用变量拼接，必须预先给出一个相对路径，然后把具体的组件路径在传入
+         2 用一个箭头函数，将需要传入的组件名或者相对路径传入
+         3 用process.env.NODE_ENV确定使用哪种加载方式
 
-                import vOther from '@/components/other'
-                //修改后
-                const vOther = () => import('@/components/other')
+         import vOther from '@/components/other'
+         //修改后
+         const vOther = () => import('@/components/other')
 
 115. 当改变对象的非第一层属性或者值时，虽然值改变了，但是并未触发其watch方法监听
 
-                使用deep，并且改变数值的方式要使用this.$set(this.obj,key,value)
-                watch:{
-                 person:{
-                      deep:true,
-                      immediate:true
-                    }
-                 },
-                 created(){
-                    setTimeout(()=>{
-                      // this.$set(this.person,'tip',45);
-                    },2000)
-                  }
+            使用deep，并且改变数值的方式要使用this.$set(this.obj,key,value)
+            watch:{
+             person:{
+                  deep:true,
+                  immediate:true
                 }
+             },
+             created(){
+                setTimeout(()=>{
+                  // this.$set(this.person,'tip',45);
+                },2000)
+              }
+            }
 
 116. 使用eventBus跨页面传参错误
 
-                问题 ：第一次触发并没有执行接收
-                      后续的触发都会积累之前的
+            问题 ：第一次触发并没有执行接收
+                  后续的触发都会积累之前的
 
-                解决： this.$nextTick(function(){
-                        //codes here
-                      })
+            解决： this.$nextTick(function(){
+                    //codes here
+                  })
 
 117. 在进行项目优化的时候，我们需要针对性的分析出哪些文件大，以及如何优化
 
@@ -592,6 +596,15 @@
           可以看做是一个微任务，在数据更新后调用，做异步处理
 
 119. 生命周期
+
+          beforeCreate（创建实例，对象未绑定属性）
+          created（对象绑定属性）
+          beforeMount（Dom挂载前）
+          mounted（DOM放置在页面内）
+          beforeUpdate（更改已完成，但尚未准备好更新DOM）
+          updated（更新DOM）
+          beforeDestroy（组件销毁前）
+          destroyed（组件销毁）
 
 120. 数据响应(数据劫持)
 
@@ -868,6 +881,26 @@
 
 181. webpack生命周期
 
+182. chrome和safari的区别
+
+        不同的 JavaScript 引擎定义初始化环境是不同的，这就形成了所谓的浏览器兼容性问题，
+        因为不同的浏览器使用不同 JavaScipt 引擎(内核不同)。
+
+183. 跨域是什么
+
+184. Object.defineProperty能不能监视数组的变化？不能，那vue官方怎么解决的
+
+185. 对加班怎么看的
+
+          平时开发尽量提高自己的效率，在工作时间内完成，如果项目需求紧急当然加班是不可避免的
+
+186. http和tcp的区别
+
+187. 如何判断两个对象相等
+
+188. v-show和v-if的区别
+
+189. props单向数据流的问题
 
 
 
