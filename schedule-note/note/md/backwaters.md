@@ -165,6 +165,13 @@
         npm i --save webpack
         ...
 
+        解析webpack配置参数，合并从shell传入和webpack.config.js文件里配置的参数，生产最后的配置结果。
+        注册所有配置的插件，好让插件监听webpack构建生命周期的事件节点，以做出对应的反应。
+        从配置的entry入口文件开始解析文件构建AST语法树，找出每个文件所依赖的文件，递归下去。
+        在解析文件递归的过程中根据局文件类型和loader配置找出合适的loader用来对文件进行转换。
+        递归完后得到每个文件的最终结果，根据entry配置生成代码块chunk。
+        输出所有chunk到文件系统。
+
 22. 前端路由的原理？
 
         History Api  优雅，但对浏览器有要求    onpopstate    onpushstate
@@ -595,7 +602,7 @@
 
           可以看做是一个微任务，在数据更新后调用，做异步处理
 
-119. 生命周期
+119. vue生命周期
 
           beforeCreate（创建实例，对象未绑定属性）
           created（对象绑定属性）
@@ -784,24 +791,22 @@
 
 149. 介绍单页应用和多页应用？
 
-                单页应用优点：  前后端分离
-                              减轻服务器压力
-                              增强用户体验
-                       缺点：  prerender预渲染优化SEO
+            单页应用优点：  前后端分离
+                          减轻服务器压力
+                          增强用户体验
+                   缺点：  prerender预渲染优化SEO
 
 150. 介绍localStorage的API？
 
-                getItem
-                setItem
-                removeItem
-                clear
+            getItem
+            setItem
+            removeItem
+            clear
 
 151. b和strong区别
 
-            ```
-                <b>是html的标签，而<strong>是web标准中xhtml的标签
-                <b>标签是一个实体标签，<strong>标签是一个逻辑标签，它的作用是加强字符的语气
-            ```
+            <b>是html的标签，而<strong>是web标准中xhtml的标签
+            <b>标签是一个实体标签，<strong>标签是一个逻辑标签，它的作用是加强字符的语气
 
 152. 介绍事件委托
 
@@ -844,10 +849,36 @@
 
 164. promise.all的实现原理
 
+            function promiseAll(promises){
+                return new Promise(function(resolve,reject){
+                    if(!Array.isArray(promises)){
+                        return reject(new TypeError("argument must be anarray"))
+                    }
+                    var countNum=0;
+                    var promiseNum=promises.length;
+                    var resolvedvalue=new Array(promiseNum);
+                    for(var i=0;i<promiseNum;i++){
+                        (function(i){
+                            Promise.resolve(promises[i]).then(function(value){
+                                countNum++;
+                                resolvedvalue[i]=value;
+                                if(countNum===promiseNum){
+                                    return resolve(resolvedvalue)
+                                }
+                            },function(reason){
+                                return reject(reason)
+                            })
+
+                        })(i)
+                    }
+                })
+            }
+
+
 165. webpack和gulp的区别
 
          gulp是基于流的自动化构建工具，但不包括模块化的功能，如果要用到的话，就需要引入外部文件，比如require.js等；
-         而webpack是自动化模块打包工具，本身就具有模块化，并且也具有压缩合并的功能。
+         而webpack是基于入口文件的自动化模块打包工具，自动地递归解析入口所需要加载的所有资源文件，本身就具有模块化，并且也具有压缩合并的功能。
 
 166. 遇到的复杂的业务场景举例
 
@@ -855,11 +886,15 @@
 
 168. 如何实现异步加载
 
+            defer/async/promise/动态script/ajax
+
 169. 网站seo处理
 
 170. 手写bind/call/apply?
 
 171. async里有多个await请求，怎么优化
+
+          promise.all()
 
 172. 介绍Fiber
 
@@ -870,6 +905,11 @@
 175. 表单跨域
 
 176. 实现 Vue SSR
+
+            服务端渲染（服务器返回组装好的HTML字符串）
+                    优点：更好的SEO
+                         首屏加载更快，用户体验好
+                    缺点：开发成本比较高，第三方中间件，如node
 
 177. 有时间看下http1.1和http2.0
 
@@ -892,7 +932,7 @@
 
 185. 对加班怎么看的
 
-          平时开发尽量提高自己的效率，在工作时间内完成，如果项目需求紧急当然加班是不可避免的
+          平时开发尽量提高自己的效率，在工作时间内完成，如果项目需求紧急当然加班是不可避免的,我也会全力配合的
 
 186. http和tcp的区别
 

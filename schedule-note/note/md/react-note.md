@@ -12,7 +12,7 @@
 
 ## JSX简介
 
-    JSX，一种 JavaScript 的语法扩展，在 JavaScript 内部实现的
+    JSX，一种 JavaScript 的语法扩展，在 JavaScript 内部实现的，使用时必须引入React库
 
   1. 表达式要包含在大括号里
 
@@ -46,7 +46,9 @@
             const element = <h1>Hello, world</h1>;
             ReactDOM.render(element, document.getElementById('root'));
 
-  6. 组件
+  6. 自定义组件
+
+    * 组件开头必须大写字母
 
     * 函数定义
 
@@ -56,6 +58,11 @@
 
     * ES6 Class定义
 
+            import { Component } from 'react';
+            等价于
+            import React from 'react';
+            const Component = React.Component;
+
             class Welcome extends React.Component {
                  render() {
                    return <h1>Hello, {this.props.name}</h1>;
@@ -63,9 +70,13 @@
                  }
             }
 
-    * props只读性
+    * 组件传参
+
+            父级向子级父级绑定属性，子级使用props接收，只读性，子级可以通过这种方式修改父级的数据
+
 
     * [事件内this的指向问题](https://blog.csdn.net/qq_34829447/article/details/81705977)
+        https://www.jianshu.com/p/c1ee12a328d2
         箭头函数 VS bind(this)
 
    7. State & 生命周期
@@ -83,12 +94,37 @@
       * 不要直接更新状态，因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态，应当使用 setState():
 
                 this.setState({comment: 'Hello'});
+                异步更新的时候，e.target.value当前的e获取不到，需要在setState函数外面定义一下
+
+   8. React16版本后新增Fragment标签替换最外层的div元素，不会被展示出来
+
+   9. immutable 不允许对state做任何修改，拷贝一份再修改
+
+   10. 代码注释
+
+            { /*狗屎 */ }
+            或者
+            {
+              // 狗屎
+            }
+
+   11. 样式类名使用className而不是class
+
+   12. label中的for更新为htmlFor
+
 
 ## Get Started
    1. npx create-react-app my-app
+      或者npm install -g create-react-app
+         create-react-app my-app
    2. cd my-app
    3. npm start     运行项目
    4. npm run build 打包项目
+   5. 文件介绍
+        src/index.js  入口文件
+        registerServiceWorker https协议在服务器上，离线访问（PWA）
+        manifest.json 快捷方式到桌面进行离线访问
+        App.test.js 前端自动化测试文件（一般用于自动化测试）
    > 这两个命令主要有以下区别：
         * 前者中默认使用 webpack.config.js 作为配置文件
         * 而后者中强制使用 webpack.production.config.js 作为配置文件
