@@ -74,12 +74,11 @@
 
             父级向子级父级绑定属性，子级使用props接收，只读性，子级可以通过这种方式修改父级的数据
 
-
     * [事件内this的指向问题](https://blog.csdn.net/qq_34829447/article/details/81705977)
         https://www.jianshu.com/p/c1ee12a328d2
         箭头函数 VS bind(this)
 
-   7. State & 生命周期
+  7. State & 生命周期
 
       * 添加一个类构造函数来初始化状态 this.state
 
@@ -91,16 +90,37 @@
 
       * 生命周期-钩子
 
+                componentWillMount页面挂载之前执行
+                render页面挂载
+                componentDidMount(数据请求 )页面挂载之后执行
+
+                shouldComponentUpdate组件更新之前执行（要求返回一个布尔类型的值）
+                componentWillUpdate组件更新之前执行（shouldComponentUpdate返回true才会执行）
+                render组件更新
+                componentDidUpdate组件更新之后执行
+
+                componentWillReceiveProps（子组件从父组件接收参数，只要父组件的render函数被触发了，则生命周期被触发，如果该组件第一次存在于父组件则不会被触发）
+                componentWillUnmount移除组件
+
+
       * 不要直接更新状态，因为 this.props 和 this.state 可能是异步更新的，不应该依靠它们的值来计算下一个状态，应当使用 setState():
 
-                this.setState({comment: 'Hello'});
+                this.setState({comment: 'Hello'},() => {异步函数});
                 异步更新的时候，e.target.value当前的e获取不到，需要在setState函数外面定义一下
 
-   8. React16版本后新增Fragment标签替换最外层的div元素，不会被展示出来
+      * state和props的更新都会触发render函数的更新
 
-   9. immutable 不允许对state做任何修改，拷贝一份再修改
+  9. immutable 不允许对state做任何修改，拷贝一份再修改
 
-   10. 代码注释
+  10. 虚拟DOM
+
+            优点：性能优化
+                 跨终端运行 ReactNative
+
+            diff算法
+                 利用key值进行同层比对(一般不用index做key值，因为index不稳定)
+
+  11. 代码注释
 
             { /*狗屎 */ }
             或者
@@ -108,9 +128,20 @@
               // 狗屎
             }
 
-   11. 样式类名使用className而不是class
+  12. ref(一般用于获取页面上的DOM节点)
 
-   12. label中的for更新为htmlFor
+            ref="(ul) => (this.ul = ul)"
+            不推荐使用，一般用数据绑定，不要直接操作dom，有异步问题
+
+  12. > 注意点
+
+          1. 样式类名使用className而不是class
+          2. label中的for更新为htmlFor
+          3. propTypes规定组件传值的值类型
+          4. defaultProps设置默认属性
+
+  13.
+
 
 
 ## Get Started
@@ -215,6 +246,23 @@
 
         分离 css 和 js 文件
         开发环境下，css 代码是放在整个打包出来的那个 bundle.js 文件中的，发布环境下当然不能混淆在一起，使用new ExtractTextPlugin('/css/[name].[chunkhash:8].css'),将 css 代码分离出来。
+
+## 源码解析
+
+   1. 背景
+
+          react16版本以后完全改写了以前的代码，但是使用者未有丝毫感觉，
+          不像vue和angular迭代更新需要处理很多兼容问题，最重要的是
+          引入了fiber,从根本上解决了如果js单线程计算量太大的话会有卡顿情况。
+          React16版本后新增Fragment标签替换最外层的div元素，不会被展示出来
+
+   2. jsx语法到js转化(jsx-->虚拟DOM-->真实的DOM对象)
+
+   (使用babel观察https://www.babeljs.cn/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=DwEwlgbgBGILwCIQgVAdgQwLYFNEGN8EA-AFxwA9SAoYAZwAcM1iAmV4AekeeNs_ARiQA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.4.5)
+
+   3. ReactElement
+
+
 
 
 
