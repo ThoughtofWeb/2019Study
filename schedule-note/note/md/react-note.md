@@ -247,7 +247,7 @@
         分离 css 和 js 文件
         开发环境下，css 代码是放在整个打包出来的那个 bundle.js 文件中的，发布环境下当然不能混淆在一起，使用new ExtractTextPlugin('/css/[name].[chunkhash:8].css'),将 css 代码分离出来。
 
-## 源码解析
+## [源码解析](https://react.jokcy.me/book/api/react-element.html)
 
    1. 背景
 
@@ -261,6 +261,25 @@
    (使用babel观察https://www.babeljs.cn/repl#?babili=false&browsers=&build=&builtIns=false&spec=false&loose=false&code_lz=DwEwlgbgBGILwCIQgVAdgQwLYFNEGN8EA-AFxwA9SAoYAZwAcM1iAmV4AekeeNs_ARiQA&debug=false&forceAllTransforms=false&shippedProposals=false&circleciRepo=&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=es2015%2Creact%2Cstage-2&prettier=false&targets=&version=7.4.5)
 
    3. ReactElement
+
+          ReactElement通过createElement创建，调用该方法需要传入三个参数：
+               type 指代这个ReactElement的类型
+               config 属性参数
+               children
+
+   4. ref使用方式
+     
+          * string ref
+               绑定 <a ref="stringRef"></a>
+               获取 this.refs.stringRef.textContent
+          * function
+               绑定 <a ref = {ele => (this.methodRef = ele)}></a>
+               获取 this.methodRef.textContent
+          * createRef
+               绑定 <a ref={this.objRef}></a>
+                    this.objRef = React.createRef()
+               获取 this.objRef.current.textContent
+               
 
 
 
