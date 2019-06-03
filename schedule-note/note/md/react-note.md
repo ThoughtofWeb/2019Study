@@ -140,7 +140,33 @@
           3. propTypes规定组件传值的值类型
           4. defaultProps设置默认属性
 
-  13.
+## Redux = reducer + flux
+
+        执行过程：
+            创建公共数据仓库createStore，用户组件执行某个动作，触发action函数dispatch(action)，
+            store通知reducer的action函数去判断并进行数据操作，组件调用store.subscribe(callback...)，
+            只要store数据更新，subscribe函数就被调用。用户组件通过this.state = store.getState()去获取，通过setState()去更新
+
+        使用原则：
+            store是唯一的
+            只有store可以改变自己的内容
+            reducer是纯函数(给定固定的输入，一定会有固定的输出，而且不会有任何的副作用
+            （不能直接修改给定的参数，不能有如setTimeout、ajax、时间操作）)
+
+        * store 公共数据存储仓库（依赖reducer）
+        * reducer 存储store中的所有数据
+                传递两个参数：
+                   state  仓库里上一次所有的数据集合
+                          reducer可以接收state, 但绝不能修改state(拷贝一份再做修改)
+                   action 用户要处理的行为函数
+
+        代码优化
+
+            1. actionTypes文件 变量和常量抽出来引用
+               const CHANGE_TYPE = 'change_type';
+            2. actionCreator
+
+
 
 
 
