@@ -120,13 +120,7 @@
             diff算法
                  利用key值进行同层比对(一般不用index做key值，因为index不稳定)
 
-  11. 代码注释
-
-            { /*狗屎 */ }
-            或者
-            {
-              // 狗屎
-            }
+  11.
 
   12. ref(一般用于获取页面上的DOM节点)
 
@@ -139,11 +133,22 @@
           2. label中的for更新为htmlFor
           3. propTypes规定组件传值的值类型
           4. defaultProps设置默认属性
+          5. 代码注释
+                 { /*狗屎 */ }
+                 或者
+                 {
+                   // 狗屎
+                 }
+
+          6. UI组件（用于页面渲染，render函数）
+             容器组件（处理业务逻辑）
+             无状态组件（一个组件不需要处理任何逻辑，只有render函数，建议改写为无状态组件）
 
 ## Redux = reducer + flux
 
         执行过程：
-            创建公共数据仓库createStore，用户组件执行某个动作，触发action函数dispatch(action)，
+            创建公共数据仓库createStore，用户组件执行某个动作，触发dispatch函数,传递action对象,
+            (如果要进行一些异步操作，需要使用react中间件，使dispatch能传递异步函数)，
             store通知reducer的action函数去判断并进行数据操作，组件调用store.subscribe(callback...)，
             只要store数据更新，subscribe函数就被调用。用户组件通过this.state = store.getState()去获取，通过setState()去更新
 
@@ -159,12 +164,27 @@
                    state  仓库里上一次所有的数据集合
                           reducer可以接收state, 但绝不能修改state(拷贝一份再做修改)
                    action 用户要处理的行为函数
+        * redux-thunk 使用中间件处理异步请求，使action抽象为一个函数传入，便于统一管理代码，便于自动化测试
+        * redux-saga
 
         代码优化
 
             1. actionTypes文件 变量和常量抽出来引用
                const CHANGE_TYPE = 'change_type';
             2. actionCreator
+
+## styled-components 使组件的样式单一，不会互相影响
+
+        * styled-components v4+解决全局样式'injectGlobal' 废除的问题
+          https://www.cnblogs.com/cxx9759/p/9807866.html
+
+## immutable.js 保证state是不可变更的
+
+        避免reducer中总是返回一个新的state对象，同时保证state是不可变更的，
+        使用immutable对象(state = fromIs({...}))的set()方法，
+        会结合之前的immutable对象的值，和设置的值，返回一个全新的对象，用户组件通过get()方法去获取设置的值
+
+
 
 
 
