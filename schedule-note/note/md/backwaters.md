@@ -943,8 +943,131 @@
 189. props单向数据流的问题
 
 
+200. React 中 keys 的作用是什么？
 
+            在 React Diff 算法中 React 会借助元素的 Key 值来判断该元素是新近创建的还是被移动而来的元素，
+            从而减少不必要的元素重渲染。
 
+201. React中调用setState之后发生了什么？
+
+            React会将当前传入的参数对象与组件当前的状态合并,
+            根据新的状态构建React元素树自动计算出新的树与老的树的节点的差异,然后根据差异对界面进行按需更新
+
+202. shouldComponentUpdate 是做什么的
+
+            没有导致state的值发生变化的setState是否会导致重渲染？会
+            组件的state没变化，从父组件接受的props也没变化，那还可能重渲染吗？可能
+
+            shouldComponentUpdate接受两个参数：nextProps和nextState，当函数返回false时候，
+            阻止接下来的render()函数的调用，阻止组件重渲染，而返回true时，组件照常重渲染。
+
+            基本数据类型
+            PureComponent避免state和props不变下的冗余的重渲染
+            复杂数据类型
+            immutable.js
+            1 优点：深拷贝/浅拷贝本身是很耗内存，而immutable本身有一套机制使内存消耗降到最低
+            2 缺点：你多了一整套的API去学习，并且immutable提供的set,map等对象容易与ES6新增的set,map对象弄混
+
+203. react生命周期函数
+
+            * 初始化阶段：
+                * getDefaultProps:获取实例的默认属性
+                * getInitialState:获取每个实例的初始化状态
+                * componentWillMount：组件即将被装载、渲染到页面上
+                * render:组件在这里生成虚拟的 DOM 节点
+                * componentDidMount:组件真正在被装载之后
+            * 运行中状态：
+                * componentWillReceiveProps:组件将要接收到属性的时候调用
+                * shouldComponentUpdate:组件接受到新属性或者新状态的时候（可以返回 false，接收数据后不更新，阻止 render 调用，后面的函数不会被继续执行了）
+                * componentWillUpdate:组件即将更新不能修改属性和状态
+                * render:组件重新描绘
+                * componentDidUpdate:组件已经更新
+            * 销毁阶段：
+                * componentWillUnmount:组件即将销毁
+
+204. 为什么虚拟 dom 会提高性能
+
+            虚拟DOM，就是用JavaScript对象来构建DOM树。
+            元素状态变更时会生成一颗新的JS结构树，利用差异算法与原来的JS对象树比较，
+            由于减少了实际DOM操作次数，性能会有很大提升。
+
+205. react diff 原理
+
+            * 把树形结构按照层级分解，只比较同级元素。
+            * 给列表结构的每个单元添加唯一的 key 属性，方便比较。
+            * React 只会匹配相同 class 的 component（这里面的 class 指的是组件的名字）
+            * 合并操作，调用 component 的 setState 方法的时候, React 将其标记为 dirty.到每一个事件循环结束, React 检查所有标记 dirty 的 component 重新绘制.
+            * 选择性子树渲染。开发人员可以重写 shouldComponentUpdate 提高 diff 的性能。
+
+206. 了解redux么，说一下redux原理
+
+            redux主要是解决了组件间状态共享的问题，主要有三个核心方法: action，store，reducer。用户组件dispatch
+            action给store,store接收action，通知reducer更新state,用户组件通过getState获取最新的数据
+            优点：
+                结构简单清晰，提高了编码效率
+            缺点：
+                * 一个组件所需要的数据，必须由父组件传过来，而不能像 flux 中直接从 store 取。
+                * 当一个组件相关数据更新时，即使父组件不需要用到这个组件，父组件还是会重新 render，可能会有效率影响，或者需要 shouldComponentUpdate 进行判断。
+
+207. react 组件的划分业务组件技术组件
+
+            * 根据组件的职责通常把组件分为 UI 组件和容器组件。
+            * UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑。
+            * 两者通过 React-Redux 提供 connect 方法联系起来
+
+208. React 中有三种构建组件的方式
+
+            React.createClass()、ES6 class 和无状态函数
+
+209. createElement 和 cloneElement 有什么区别？
+
+210. 应该在 React 组件的何处发起 Ajax 请求
+
+211. 调用 super(props) 的目的是什么
+
+            在 super() 被调用之前，子类是不能使用 this 的，在 ES2015 中，子类必须在 constructor 中调用 super()。
+            传递 props 给 super() 的原因则是便于(在子类中)能在 constructor 访问 this.props。
+
+212. 描述事件在 React 中的处理方式
+
+            为了解决跨浏览器兼容性问题，React 中的事件处理程序将传递 SyntheticEvent 的实例，它是 React 的浏览器本机事件的跨浏览器包装器。
+            React 实际上并没有将事件附加到子节点本身。React 将使用单个事件监听器监听顶层的所有事件。
+            这对于性能是有好处的，这也意味着在更新 DOM 时，React 不需要担心跟踪事件监听器。
+
+213. 除了在构造函数中绑定 this，还有其它方式吗
+
+            箭头函数
+            bind(this)
+
+214. 为什么建议传递给 setState 的参数是一个 callback 而不是一个对象
+
+            异步更新
+
+215. 何为高阶组件(HOC)
+
+            一个以组件为参数并返回一个新组件的函数(如Redux 的 connect 函数)
+
+216. 展示组件(Presentational component)和容器组件(Container component)之间有何不同
+
+            * 展示组件关心组件看起来是什么。展示专门通过 props 接受数据和回调，并且几乎不会有自身的状态，但当展示组件拥有自身的状态时，通常也只关心 UI 状态而不是数据的状态。
+            * 容器组件则更关心组件是如何运作的。容器组件会为展示组件或者其它容器组件提供数据和行为，它们会调用 redux，并将其作为回调提供给展示组件。
+
+217. React 中 refs 的作用是什么？
+
+            Refs 是 React 提供给我们的安全访问 DOM 元素或者某个组件实例的句柄。
+            我们可以为元素添加 ref 属性然后在回调函数中接受该元素在 DOM 树中的句柄
+
+218. 什么是 React?
+
+            React.js 帮助我们将界面分成了各个独立的小块，每一个块就是组件，组件之间组合、嵌套，就成了我们的页面。
+             * 一个组件的显示形态和行为有可能是由某些数据决定的。数据发生改变时，组件的显示形态就会发生相应的改变。
+               React.js 提供了一种非常高效的方式帮助我们做到了数据和组件显示形态之间的同步。
+             * React.js 不是一个框架，它只是一个库，只提供 UI （view）层面的解决方案。
+             
+220. 状态(state)和属性(props)之间有何不同
+
+            State是一种数据结构，用于组件挂载时所需数据的默认值
+            Props是组件的配置，props由父组件传递给子组件，就子组件而言，props 是不可变的。
 
 
 

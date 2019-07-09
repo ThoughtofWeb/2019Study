@@ -37,6 +37,9 @@
             所有的内容在渲染之前都被转换成了字符串。
             这样可以有效地防止 XSS(跨站脚本) 攻击。
 
+            转义html字符串
+            dangerouslySetInnerHTML = {{_html:this.props.content}}
+
   5. 元素渲染
       * 定义一个根节点
           `<div id="root"></div>`
@@ -178,11 +181,19 @@
         * styled-components v4+解决全局样式'injectGlobal' 废除的问题
           https://www.cnblogs.com/cxx9759/p/9807866.html
 
-## immutable.js 保证state是不可变更的
+## [immutable.js 保证state是不可变更的](https://segmentfault.com/a/1190000002909224)
 
         避免reducer中总是返回一个新的state对象，同时保证state是不可变更的，
         使用immutable对象(state = fromIs({...}))的set()方法，
         会结合之前的immutable对象的值，和设置的值，返回一个全新的对象，用户组件通过get()方法去获取设置的值
+
+        常用的api见链接
+
+## [React-router](https://www.cnblogs.com/sunLemon/p/9020153.html)
+
+##
+
+
 
 
 
