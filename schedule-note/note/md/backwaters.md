@@ -5,7 +5,7 @@
         我先自我介绍一下吧，我叫曹相相，有三年多的工作经验，
         之前是在鲁班软件做前端开发这块的工作，
         主要的工作内容是还原ui设计稿，配合后端程序调用接口，展示数据。
-        前端这块用的技术框架有react、vue和angular1+，我平时喜欢研究技术网站，
+        前端这块用的技术框架有react、vue和angularjs，我平时喜欢研究技术网站，
         有时候会针对某些业务看其中的原理，通过平时的项目经验以及对技术的研究，自己的技术也受益了很多。
 
 2. 离职原因
@@ -193,10 +193,10 @@
 
 26. web request动画帧
 
-        浏览器会遍历动画帧请求回调函数列表
-        css3不能实现scrollTop，但是requestAnimationFrame可以
-        css3对贝塞尔曲线轨迹有限制，但是requestAnimationFrame没有
-        与setTimeout用法类似，但是requestAnimationFrame调用一次只会重绘一次动画，资源高效利用
+        与setTimeout相比，requestAnimationFrame最大的优势是由系统来决定回调函数的执行时机，
+        系统每次刷新之前会主动调用requestAnimationFrame中的回调函数,它能保证回调函数在屏幕每一次的刷新间隔中只被执行一次，
+        这样就不会引起丢帧现象，也不会导致动画出现卡顿的问题。
+        兼容性问题
 
 27. 布局
 
