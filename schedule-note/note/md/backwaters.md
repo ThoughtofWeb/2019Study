@@ -272,8 +272,9 @@
 49. 跨域请求的几种方式？
 
         jsonp原理
+            动态创建script标签，绑定src属性，向服务端传入一个callback函数，服务端将返回结果以函数参数的形式返回。
         hash
-        Web Socket
+        Web Socket(服务端可以主动向客户端推送数据)
         CORS
         postMessage
 
@@ -1128,3 +1129,19 @@
             * Hooks 应该在外层使用，不应该在循环，条件或嵌套函数中使用
             * Hooks 应该只在函数组件中使用。
 
+232. React中组件通信的几种方式,分别说说
+
+            父组件向子组件通信
+                父级绑定属性 子级props接收
+            子组件向父组件通信
+                调用父级的回调函数去更新
+            跨级组件通信
+                * 层层组件传递props
+                * context
+                    父组件提供Context需要通过childContextTypes进行“声明”，
+                    子组件使用父组件的Context属性需要通过contextTypes进行“申请”，
+                    所以，我认为React的Context是一种“带权限”的组件作用域
+            没有嵌套关系组件之间的通信
+                自定义事件events
+            redux
+                actionCreators、constants、reducer增加多点约束来保证代码质量
