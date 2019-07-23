@@ -1123,8 +1123,8 @@
 
 231. 什么是 Hooks
 
-            我们不能在函数组件中使用state ，因为它们不是类组件。
-            Hooks 让我们在函数组件中可以使用state 和其他功能。例如useState，useEffect，useContext，useReducer等
+            Hooks是React 16.8提出的新特性，体现在处理组件之间复用状态逻辑的问题，
+            保证在函数组件中可以使用state以及生命周期等功能处理.
 
             * Hooks 应该在外层使用，不应该在循环，条件或嵌套函数中使用
             * Hooks 应该只在函数组件中使用。
