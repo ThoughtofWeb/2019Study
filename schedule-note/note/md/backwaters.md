@@ -940,7 +940,29 @@
 
 188. v-show和v-if的区别
 
+            1. 频繁操作时，使用 v-show，一次性渲染完的，使用 v-if
+            2. css
+            3. v-if="false" 时，内部组件是不会渲染的，所以在特定条件才渲染部分组件（或内容）时，可以先将条件设置为 false，需要时（或异步，比如 $nextTick）再设置为 true，这样可以性能优化
+
 189. props单向数据流的问题
+
+190. 计算属性和 watch 的区别
+
+                区别来源于用法，只是需要动态值，那就用计算属性；
+                需要知道值的改变后执行业务逻辑，才用 watch
+
+            computed 和 methods 有什么区别？
+
+                methods 是一个方法，它可以接受参数，而 computed 不能；
+                computed 是可以缓存的，methods 不会；一般在 v-for 里，
+                需要根据当前项动态绑定值时，只能用 methods 而不能用 computed，因为 computed 不能传参。
+
+            watch 是一个对象时，它有哪些选项？
+
+                handler 执行的函数
+                deep 是否深度
+                immediate 是否立即执行
+
 
 
 200. React 中 keys 的作用是什么？
@@ -1117,6 +1139,9 @@
 
 229. redux-thunk 工作流程
 
+            用户组件dispatch触发actionCreator函数，actionCreator函数异步请求拿到数据，
+            将数据传递给store,store派发给reducer,reducer去更新对应的state。
+
 230. 如何在重新加载页面时保留数据
 
             localStorage
@@ -1142,6 +1167,6 @@
                     子组件使用父组件的Context属性需要通过contextTypes进行“申请”，
                     所以，我认为React的Context是一种“带权限”的组件作用域
             没有嵌套关系组件之间的通信
-                自定义事件events
+                自定义事件events,父组件通过emitter自定义事件声明,子组件触发事件更新
             redux
                 actionCreators、constants、reducer增加多点约束来保证代码质量
