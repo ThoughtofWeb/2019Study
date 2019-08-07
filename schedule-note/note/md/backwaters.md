@@ -635,6 +635,11 @@
 
 124. vuex
 
+         1. Vuex 是为Vue提供的一种状态管理机制。
+         2、Actions 执行异步操作如调用后台api 然后dispatch actions 方法 再commit mutations 再对state 进行修改
+         3、Mutataions 执行的是同步的操作。可以直接使用改变state
+         4、state 作为状态，改变后会直接作用到View上
+
 125. 组件间通信
 
          父  :name="projectName"
@@ -783,7 +788,7 @@
 
 146. 项目中树组件的使用场景及了解？
 
-147. 为什么虚拟dom比真实dom性能好？
+147. 为什么虚拟dom比真实dom性能好？虚拟dom优缺点
 
             虚拟DOM不会进行排版与重绘操作,减少对dom操作的次数
 
@@ -963,7 +968,30 @@
                 deep 是否深度
                 immediate 是否立即执行
 
+191. 递归组件
 
+            要给组件设置 name；
+            要有一个明确的结束条件
+
+192. keep-alive 的理解
+
+            keep-alive可以看做对组件的缓存方式，将组件的状态抽象成一个虚拟对象，每次缓存的时候将该对象存在数组中，
+            路由更新的时候，直接获取缓存的对象
+
+193. 自定义组件的语法糖 v-model 是怎样实现的
+
+194. Vuex 中 mutations 和 actions 的区别
+
+195. render函数是什么
+
+196. 路由的跳转方式
+
+            通过 <router-link to="home">，router-link 标签会渲染为 <a> 标签，在 template 中的跳转都是用这种；
+            另一种是编程式导航，也就是通过 JS 跳转，比如 router.push('/home')。
+
+197. vue-router 有哪几种导航守卫?
+
+198. 对MVVM的理解？
 
 200. React 中 keys 的作用是什么？
 
@@ -1086,12 +1114,31 @@
                React.js 提供了一种非常高效的方式帮助我们做到了数据和组件显示形态之间的同步。
              * React.js 不是一个框架，它只是一个库，只提供 UI （view）层面的解决方案。
 
-219. React和Vue的区别？
+219. Vue与Angular以及React的区别？
+
+            Vue与AngularJS的区别
+
+            Angular采用TypeScript开发, 而Vue可以使用javascript也可以使用TypeScript
+            AngularJS依赖对数据做脏检查，所以Watcher越多越慢；Vue.js使用基于依赖追踪的观察并且使用异步队列更新，所有的数据都是独立触发的。
+            AngularJS社区完善, Vue的学习成本较小
+
+            React和Vue的区别？
 
             数据是不是可变的
             通过js操作一切还是各自的处理方式
             类式的组件写法还是声明式的写法（vue3.0后支持类式写法）
             什么交给社区去做，什么功能内置
+
+            * vue组件分为全局注册和局部注册，在react中都是通过import相应组件，然后模版中引用；
+            * props是可以动态变化的，子组件也实时更新，在react中官方建议props要像纯函数那样，输入输出一致对应，而且不太建议通过props来更改视图；
+            * 子组件一般要显示地调用props选项来声明它期待获得的数据。而在react中不必需，另两者都有props校验机制；
+            * 每个Vue实例都实现了事件接口，方便父子组件通信，小型项目中不需要引入状态管理机制，而react必需自己实现；
+            * 使用插槽分发内容，使得可以混合父组件的内容与子组件自己的模板；
+            * 多了指令系统，让模版可以实现更丰富的功能，而React只能使用JSX语法；
+            * Vue增加的语法糖computed和watch，而在React中需要自己写一套逻辑来实现；
+            * react的思路是all in js，通过js来生成html，所以设计了jsx，还有通过js来操作css，社区的styled-component、jss等；而 vue是把html，css，js组合到一起，用各自的处理方式，vue有单文件组件，可以把html、css、js写到一个文件中，html提供了模板引擎来处理。
+            * react做的事情很少，很多都交给社区去做，vue很多东西都是内置的，写起来确实方便一些， 比如 redux的combineReducer就对应vuex的modules， 比如reselect就对应vuex的getter和vue组件的computed， vuex的mutation是直接改变的原始数据，而redux的reducer是返回一个全新的state，所以redux结合immutable来优化性能，vue不需要。
+            * react是整体的思路的就是函数式，所以推崇纯组件，数据不可变，单向数据流，当然需要双向的地方也可以做到，比如结合redux-form，组件的横向拆分一般是通过高阶组件。而vue是数据可变的，双向绑定，声明式的写法，vue组件的横向拆分很多情况下用mixin。
 
 220. 状态(state)和属性(props)之间有何不同
 
@@ -1113,7 +1160,8 @@
 224. 什么是 React Router Dom 及其工作原理
 
             react-router-dom 提供两个路由器BrowserRouter和HashRoauter。
-            前者基于rul的pathname段，后者基于hash段。
+            区别：browserHistory 是使用浏览器中的 History API 用于处理 URL，由于路径是指向服务器的真实路径，
+            如果该路径下并没有相关资源，所以用户访问的资源不存在；hashHistory 使用 URL 中的 hash（#）部分去创建路由。
 
 225. 什么是错误边界
 
@@ -1170,3 +1218,5 @@
                 自定义事件events,父组件通过emitter自定义事件声明,子组件触发事件更新
             redux
                 actionCreators、constants、reducer增加多点约束来保证代码质量
+
+233. 受控组件和非受控组件
