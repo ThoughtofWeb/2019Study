@@ -996,6 +996,8 @@
 
 195. render函数是什么
 
+           因为vue是虚拟DOM，所以在拿到template模板时也要转译成VNode的函数，而用render函数构建DOM，vue就免去了转译的过程
+
 196. 路由的跳转方式
 
             通过 <router-link to="home">，router-link 标签会渲染为 <a> 标签，在 template 中的跳转都是用这种；
@@ -1022,6 +1024,8 @@
 
 
 198. 对MVVM的理解？
+
+            MVVM模式由Model、View、ViewModel组成，Model是进行数据业务交互的，View是视图展示的，ViewModel是两者交互，状态更新的媒介，可以看做是一个控制器，这种模式下就不需要进行更多的Dom操作，关注于数据本身的交互，提升性能
 
 200. React 中 keys 的作用是什么？
 
