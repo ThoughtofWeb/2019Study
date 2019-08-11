@@ -1003,6 +1003,24 @@
 
 197. vue-router 有哪几种导航守卫?
 
+            前置守卫 beforeEach
+            后置钩子 afterEach
+            单独路由独享钩子  beforeEnter
+            组件内的钩子  
+                beforeRouteEnter(to, from, next) {
+                // do someting
+                // 在渲染该组件的对应路由被 confirm 前调用
+                },
+                beforeRouteUpdate(to, from, next) {
+                // do someting
+                // 在当前路由改变，但是依然渲染该组件是调用
+                },
+                beforeRouteLeave(to, from ,next) {
+                // do someting
+                // 导航离开该组件的对应路由时被调用
+                }
+
+
 198. 对MVVM的理解？
 
 200. React 中 keys 的作用是什么？
@@ -1232,3 +1250,17 @@
                 actionCreators、constants、reducer增加多点约束来保证代码质量
 
 233. 受控组件和非受控组件
+
+234. vuex是什么
+           
+           存储所有组件的状态，进行通信
+
+235. vuex和redux区别
+           
+        （1）改进了Redux中的Action和Reducer函数，以mutations变化函数取代Reducer，
+        无需switch,只需在对应的mutation函数里改变state值即可
+        （2）由于Vue自动重新渲染的特性，无需订阅重新渲染函数，只要生成新的State即可
+        （3）Vuex数据流的顺序是:View调用store.commit提交对应的请求到Store中对应的          mutation函数->store改变(vue检测到数据变化自动渲染)
+        （4）React-Redux还有一些衍生项目，DVA就是
+
+236. 
